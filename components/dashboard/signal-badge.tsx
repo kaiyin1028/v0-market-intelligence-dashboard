@@ -97,6 +97,50 @@ const signalConfig: Record<
   },
 }
 
+/** AI 訊號徽章屬性 */
+interface AISignalBadgeProps {
+  /** 訊號類型 */
+  signal: SignalType
+  /** AI 信心度 (0-100) */
+  confidence: number
+  /** 尺寸 */
+  size?: 'sm' | 'md' | 'lg'
+}
+
+/** AI 訊號徽章 - 顯示 AI 信心度 */
+export function AISignalBadge({ signal, confidence, size = 'md' }: AISignalBadgeProps) {
+  const config = signalConfig[signal] || {
+    label: signal,
+    className: 'bg-muted/50 text-muted-foreground border-border',
+    icon: Activity,
+  }
+  const Icon = config.icon
+
+  const sizeClasses = {
+    sm: 'text-[10px] px-2 py-1 gap-1.5',
+    md: 'text-xs px-2.5 py-1.5 gap-2',
+    lg: 'text-sm px-3 py-2 gap-2',
+  }
+
+  return (
+    <div className={cn(
+      'inline-flex items-center rounded-xl border font-semibold transition-all',
+      config.className,
+      sizeClasses[size]
+    )}>
+      <Icon className={cn(
+        size === 'sm' && 'h-3 w-3',
+        size === 'md' && 'h-3.5 w-3.5',
+        size === 'lg' && 'h-4 w-4'
+      )} />
+      <span>{config.label}</span>
+      <span className="ml-1 rounded-md bg-background/50 px-1.5 py-0.5 text-[10px] font-bold">
+        {confidence}%
+      </span>
+    </div>
+  )
+}
+
 export function SignalBadge({ signal, size = 'md', showIcon = true }: SignalBadgeProps) {
   const config = signalConfig[signal] || {
     label: signal,

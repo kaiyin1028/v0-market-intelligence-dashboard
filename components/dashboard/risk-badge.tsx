@@ -50,6 +50,53 @@ const getRiskConfig = (risk: number) => {
   }
 }
 
+/** 詳細風險指示器屬性 */
+interface DetailedRiskIndicatorProps {
+  /** 風險值 (0-100) */
+  risk: number
+  /** 是否顯示建議文字 */
+  showAdvice?: boolean
+}
+
+/** 詳細風險指示器 - 包含進度條和建議 */
+export function DetailedRiskIndicator({ risk, showAdvice = true }: DetailedRiskIndicatorProps) {
+  const config = getRiskConfig(risk)
+  const Icon = config.icon
+
+  const getAdvice = (risk: number) => {
+    if (risk <= 25) return '風險可控，適合積極操作'
+    if (risk <= 50) return '風險適中，建議謹慎操作'
+    if (risk <= 75) return '風險較高，建議減碼觀望'
+    return '風險極高，建議暫時離場'
+  }
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1.5">
+          <Icon className={cn('h-3.5 w-3.5', config.className.includes('chart-1') ? 'text-chart-1' : config.className.includes('chart-2') ? 'text-chart-2' : config.className.includes('chart-3') ? 'text-chart-3' : 'text-chart-4')} />
+          <span className="text-xs font-medium">風險等級</span>
+        </div>
+        <span className={cn('text-sm font-bold', config.className.includes('chart-1') ? 'text-chart-1' : config.className.includes('chart-2') ? 'text-chart-2' : config.className.includes('chart-3') ? 'text-chart-3' : 'text-chart-4')}>
+          {config.level} ({risk}%)
+        </span>
+      </div>
+      <div className="h-2 w-full overflow-hidden rounded-full bg-muted/50">
+        <div
+          className={cn(
+            'h-full rounded-full transition-all',
+            risk <= 25 ? 'bg-chart-1' : risk <= 50 ? 'bg-chart-3' : risk <= 75 ? 'bg-chart-4' : 'bg-chart-2'
+          )}
+          style={{ width: `${risk}%` }}
+        />
+      </div>
+      {showAdvice && (
+        <p className="text-[10px] text-muted-foreground">{getAdvice(risk)}</p>
+      )}
+    </div>
+  )
+}
+
 export function RiskBadge({ risk, showValue = false, size = 'md' }: RiskBadgeProps) {
   const config = getRiskConfig(risk)
   const Icon = config.icon
