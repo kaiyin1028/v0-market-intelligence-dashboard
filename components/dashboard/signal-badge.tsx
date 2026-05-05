@@ -2,9 +2,8 @@
 
 /**
  * 訊號徽章元件
- * Signal Badge Component
- * 
  * 顯示買賣訊號類型
+ * 明亮清爽專業風格設計
  */
 
 import { Badge } from '@/components/ui/badge'
@@ -17,6 +16,10 @@ import {
   Minus,
   ArrowDownRight,
   ArrowUpRight,
+  Zap,
+  AlertTriangle,
+  BarChart3,
+  Activity,
 } from 'lucide-react'
 
 interface SignalBadgeProps {
@@ -39,64 +42,93 @@ const signalConfig: Record<
 > = {
   'strong-buy': {
     label: '強力買入',
-    className: 'bg-chart-1/20 text-chart-1 border-chart-1/30',
+    className: 'bg-success/15 text-success border-success/25 shadow-success/10',
     icon: ArrowUpRight,
   },
   buy: {
     label: '買入',
-    className: 'bg-chart-1/10 text-chart-1 border-chart-1/20',
+    className: 'bg-success/10 text-success border-success/20',
     icon: TrendingUp,
   },
   watch: {
     label: '觀察',
-    className: 'bg-chart-3/10 text-chart-3 border-chart-3/20',
+    className: 'bg-primary/10 text-primary border-primary/20',
     icon: Eye,
+  },
+  hold: {
+    label: '持有',
+    className: 'bg-warning/10 text-warning border-warning/20',
+    icon: Activity,
   },
   reduce: {
     label: '減碼',
-    className: 'bg-chart-4/10 text-chart-4 border-chart-4/20',
+    className: 'bg-warning/15 text-warning border-warning/25',
     icon: Minus,
   },
   sell: {
     label: '賣出',
-    className: 'bg-chart-2/10 text-chart-2 border-chart-2/20',
+    className: 'bg-danger/10 text-danger border-danger/20',
     icon: TrendingDown,
   },
   short: {
     label: '做空',
-    className: 'bg-chart-2/20 text-chart-2 border-chart-2/30',
+    className: 'bg-danger/15 text-danger border-danger/25 shadow-danger/10',
     icon: ArrowDownRight,
+  },
+  breakout: {
+    label: '突破',
+    className: 'bg-accent/15 text-accent border-accent/25 shadow-accent/10',
+    icon: Zap,
+  },
+  false_breakout: {
+    label: '假突破',
+    className: 'bg-danger/15 text-danger border-danger/25',
+    icon: AlertTriangle,
+  },
+  accumulation: {
+    label: '吸籌',
+    className: 'bg-success/10 text-success border-success/20',
+    icon: BarChart3,
+  },
+  distribution: {
+    label: '派發',
+    className: 'bg-danger/10 text-danger border-danger/20',
+    icon: BarChart3,
   },
 }
 
 export function SignalBadge({ signal, size = 'md', showIcon = true }: SignalBadgeProps) {
-  const config = signalConfig[signal]
+  const config = signalConfig[signal] || {
+    label: signal,
+    className: 'bg-muted/50 text-muted-foreground border-border',
+    icon: Activity,
+  }
   const Icon = config.icon
 
   const sizeClasses = {
-    sm: 'text-[10px] px-1.5 py-0.5',
-    md: 'text-xs px-2 py-0.5',
-    lg: 'text-sm px-2.5 py-1',
+    sm: 'text-[10px] px-1.5 py-0.5 gap-1',
+    md: 'text-xs px-2 py-0.5 gap-1.5',
+    lg: 'text-sm px-2.5 py-1 gap-1.5',
+  }
+
+  const iconSizes = {
+    sm: 'h-2.5 w-2.5',
+    md: 'h-3 w-3',
+    lg: 'h-3.5 w-3.5',
   }
 
   return (
     <Badge
       variant="outline"
       className={cn(
-        'font-medium',
+        'inline-flex items-center font-semibold rounded-full transition-all duration-200',
+        'hover:shadow-sm',
         config.className,
         sizeClasses[size]
       )}
     >
       {showIcon && (
-        <Icon
-          className={cn(
-            'mr-1',
-            size === 'sm' && 'h-3 w-3',
-            size === 'md' && 'h-3.5 w-3.5',
-            size === 'lg' && 'h-4 w-4'
-          )}
-        />
+        <Icon className={iconSizes[size]} />
       )}
       {config.label}
     </Badge>

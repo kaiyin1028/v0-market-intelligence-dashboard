@@ -203,8 +203,8 @@ export function StockAnalysisContent() {
                 size="sm"
               />
               <div className="space-y-1">
-                <SignalBadge signal="買入" strength={85} />
-                <RiskBadge level="中" />
+                <SignalBadge signal="buy" />
+                <RiskBadge risk={45} />
               </div>
             </div>
           </div>

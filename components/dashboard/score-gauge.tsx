@@ -2,9 +2,8 @@
 
 /**
  * 評分儀表元件
- * Score Gauge Component
- * 
  * 環形進度條顯示分數
+ * 明亮清爽專業風格設計
  */
 
 import { cn } from '@/lib/utils'
@@ -31,62 +30,91 @@ export function ScoreGauge({
 }: ScoreGaugeProps) {
   // 尺寸配置
   const sizeConfig = {
-    sm: { width: 48, strokeWidth: 4, fontSize: 'text-xs' },
-    md: { width: 64, strokeWidth: 5, fontSize: 'text-sm' },
-    lg: { width: 80, strokeWidth: 6, fontSize: 'text-base' },
+    sm: { width: 52, strokeWidth: 4, fontSize: 'text-xs', labelSize: 'text-[9px]' },
+    md: { width: 68, strokeWidth: 5, fontSize: 'text-sm', labelSize: 'text-[10px]' },
+    lg: { width: 88, strokeWidth: 6, fontSize: 'text-base', labelSize: 'text-xs' },
   }
 
-  const { width, strokeWidth, fontSize } = sizeConfig[size]
+  const { width, strokeWidth, fontSize, labelSize } = sizeConfig[size]
   const radius = (width - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
   const progress = (score / 100) * circumference
   const offset = circumference - progress
 
   // 顏色配置
-  const getStrokeColor = () => {
+  const getColors = () => {
     switch (type) {
       case 'bullish':
-        return 'stroke-chart-1'
+        return { 
+          stroke: 'stroke-success', 
+          text: 'text-success',
+          bg: 'text-success/10',
+          glow: 'drop-shadow-[0_0_4px_hsl(var(--success)/0.3)]',
+        }
       case 'bearish':
-        return 'stroke-chart-2'
+        return { 
+          stroke: 'stroke-danger', 
+          text: 'text-danger',
+          bg: 'text-danger/10',
+          glow: 'drop-shadow-[0_0_4px_hsl(var(--danger)/0.3)]',
+        }
       case 'warning':
-        return 'stroke-chart-4'
+        return { 
+          stroke: 'stroke-warning', 
+          text: 'text-warning',
+          bg: 'text-warning/10',
+          glow: 'drop-shadow-[0_0_4px_hsl(var(--warning)/0.3)]',
+        }
       case 'info':
-        return 'stroke-chart-3'
+        return { 
+          stroke: 'stroke-accent', 
+          text: 'text-accent',
+          bg: 'text-accent/10',
+          glow: 'drop-shadow-[0_0_4px_hsl(var(--accent)/0.3)]',
+        }
       default:
         // 根據分數決定顏色
-        if (score >= 70) return 'stroke-chart-1'
-        if (score >= 40) return 'stroke-chart-4'
-        return 'stroke-chart-2'
+        if (score >= 70) return { 
+          stroke: 'stroke-success', 
+          text: 'text-success',
+          bg: 'text-success/10',
+          glow: 'drop-shadow-[0_0_4px_hsl(var(--success)/0.3)]',
+        }
+        if (score >= 40) return { 
+          stroke: 'stroke-warning', 
+          text: 'text-warning',
+          bg: 'text-warning/10',
+          glow: 'drop-shadow-[0_0_4px_hsl(var(--warning)/0.3)]',
+        }
+        return { 
+          stroke: 'stroke-danger', 
+          text: 'text-danger',
+          bg: 'text-danger/10',
+          glow: 'drop-shadow-[0_0_4px_hsl(var(--danger)/0.3)]',
+        }
     }
   }
 
-  const getTextColor = () => {
-    switch (type) {
-      case 'bullish':
-        return 'text-chart-1'
-      case 'bearish':
-        return 'text-chart-2'
-      case 'warning':
-        return 'text-chart-4'
-      case 'info':
-        return 'text-chart-3'
-      default:
-        if (score >= 70) return 'text-chart-1'
-        if (score >= 40) return 'text-chart-4'
-        return 'text-chart-2'
-    }
-  }
+  const colors = getColors()
 
   return (
     <div className="flex flex-col items-center">
       <div className="relative" style={{ width, height: width }}>
+        {/* 背景發光效果 */}
+        <div 
+          className={cn(
+            'absolute inset-0 rounded-full blur-md opacity-20',
+            colors.bg
+          )} 
+        />
+        
         {/* 背景圓環 */}
         <svg
           className="absolute inset-0 -rotate-90"
           width={width}
           height={width}
         >
+          {/* 背景軌道 */}
           <circle
             cx={width / 2}
             cy={width / 2}
@@ -94,8 +122,9 @@ export function ScoreGauge({
             fill="none"
             stroke="currentColor"
             strokeWidth={strokeWidth}
-            className="text-muted/30"
+            className="text-muted/20"
           />
+          
           {/* 進度圓環 */}
           <circle
             cx={width / 2}
@@ -106,23 +135,28 @@ export function ScoreGauge({
             strokeDasharray={circumference}
             strokeDashoffset={offset}
             strokeLinecap="round"
-            className={cn('transition-all duration-500', getStrokeColor())}
+            className={cn(
+              'transition-all duration-700 ease-out',
+              colors.stroke,
+              colors.glow
+            )}
           />
         </svg>
         
         {/* 中間文字 */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className={cn('font-bold', fontSize, getTextColor())}>
+          <span className={cn('font-bold tracking-tight', fontSize, colors.text)}>
             {score}
-            {showPercent && <span className="text-[0.7em]">%</span>}
+            {showPercent && <span className="text-[0.65em] opacity-70">%</span>}
           </span>
         </div>
       </div>
       
       {/* 標籤 */}
       {label && (
-        <p className={cn('mt-1.5 text-center text-muted-foreground', 
-          size === 'sm' ? 'text-[10px]' : 'text-xs'
+        <p className={cn(
+          'mt-1.5 text-center text-muted-foreground font-medium', 
+          labelSize
         )}>
           {label}
         </p>
