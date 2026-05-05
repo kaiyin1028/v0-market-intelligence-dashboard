@@ -2,8 +2,8 @@
  * 金融市場情報量化儀表板 - 全域樣式
  * Market Intelligence Quant Dashboard - Global Styles
  * 
- * 配色方案：深海軍藍、石板灰、翡翠綠、青色、紫羅蘭、琥珀色、玫瑰色
- * 設計風格：優雅、乾淨、高端、機構交易風格
+ * 配色方案：明亮白色、淺灰、翡翠綠、天藍、淡紫、琥珀
+ * 設計風格：優雅、清爽、專業、現代極簡
  */
 
 @import 'tailwindcss';
@@ -12,72 +12,77 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ============================================
-   淺色主題 (Light Theme)
+   明亮主題 (Light Theme) - 預設
    ============================================ */
 :root {
-  /* 基礎背景與前景 */
-  --background: oklch(0.98 0.005 250);
-  --foreground: oklch(0.15 0.02 250);
+  /* 基礎背景與前景 - 純淨白色系 */
+  --background: oklch(0.985 0.002 250);
+  --foreground: oklch(0.20 0.02 250);
 
-  /* 卡片樣式 */
+  /* 卡片樣式 - 柔和白色 */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.02 250);
+  --card-foreground: oklch(0.20 0.02 250);
 
   /* 彈出層樣式 */
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.02 250);
+  --popover-foreground: oklch(0.20 0.02 250);
 
-  /* 主色調 - 深海軍藍 */
-  --primary: oklch(0.30 0.08 250);
+  /* 主色調 - 優雅深藍 */
+  --primary: oklch(0.35 0.08 250);
   --primary-foreground: oklch(0.98 0.005 250);
 
-  /* 次要色調 - 石板灰 */
-  --secondary: oklch(0.95 0.01 250);
-  --secondary-foreground: oklch(0.25 0.03 250);
+  /* 次要色調 - 淺灰藍 */
+  --secondary: oklch(0.96 0.008 250);
+  --secondary-foreground: oklch(0.30 0.03 250);
 
   /* 靜音色調 */
-  --muted: oklch(0.95 0.01 250);
-  --muted-foreground: oklch(0.50 0.02 250);
+  --muted: oklch(0.96 0.008 250);
+  --muted-foreground: oklch(0.45 0.02 250);
 
-  /* 強調色調 - 青色 */
-  --accent: oklch(0.92 0.03 200);
-  --accent-foreground: oklch(0.20 0.05 200);
+  /* 強調色調 - 天藍色 */
+  --accent: oklch(0.94 0.025 220);
+  --accent-foreground: oklch(0.25 0.05 220);
 
-  /* 危險/空頭色調 - 玫瑰色 */
-  --destructive: oklch(0.55 0.22 25);
-  --destructive-foreground: oklch(0.98 0.01 25);
+  /* 危險/空頭色調 - 柔和玫瑰 */
+  --destructive: oklch(0.58 0.20 20);
+  --destructive-foreground: oklch(0.98 0.01 20);
 
-  /* 邊框與輸入框 */
-  --border: oklch(0.90 0.01 250);
-  --input: oklch(0.90 0.01 250);
-  --ring: oklch(0.50 0.10 250);
+  /* 邊框與輸入框 - 極淺灰 */
+  --border: oklch(0.92 0.008 250);
+  --input: oklch(0.94 0.006 250);
+  --ring: oklch(0.55 0.12 220);
 
-  /* 圖表配色 */
-  --chart-1: oklch(0.55 0.18 165);   /* 翡翠綠 - 多頭/上漲 */
-  --chart-2: oklch(0.55 0.22 25);    /* 玫瑰色 - 空頭/下跌 */
-  --chart-3: oklch(0.60 0.15 200);   /* 青色 - 中性/AI洞察 */
-  --chart-4: oklch(0.70 0.15 85);    /* 琥珀色 - 警告 */
-  --chart-5: oklch(0.55 0.20 290);   /* 紫羅蘭 - 特殊標記 */
+  /* 圖表配色 - 明亮版 */
+  --chart-1: oklch(0.58 0.16 160);   /* 翡翠綠 - 多頭/上漲 */
+  --chart-2: oklch(0.58 0.18 20);    /* 玫瑰色 - 空頭/下跌 */
+  --chart-3: oklch(0.60 0.14 220);   /* 天藍色 - 中性/AI洞察 */
+  --chart-4: oklch(0.72 0.14 80);    /* 琥珀色 - 警告 */
+  --chart-5: oklch(0.60 0.18 280);   /* 淡紫色 - 特殊標記 */
 
-  /* 圓角設定 */
-  --radius: 0.75rem;
+  /* 圓角設定 - 更大更圓潤 */
+  --radius: 1rem;
 
-  /* 側邊欄樣式 */
-  --sidebar: oklch(0.12 0.03 250);
-  --sidebar-foreground: oklch(0.90 0.01 250);
-  --sidebar-primary: oklch(0.60 0.15 200);
+  /* 側邊欄樣式 - 明亮版 */
+  --sidebar: oklch(0.98 0.004 250);
+  --sidebar-foreground: oklch(0.25 0.02 250);
+  --sidebar-primary: oklch(0.55 0.14 220);
   --sidebar-primary-foreground: oklch(0.98 0.005 250);
-  --sidebar-accent: oklch(0.20 0.04 250);
-  --sidebar-accent-foreground: oklch(0.90 0.01 250);
-  --sidebar-border: oklch(0.25 0.03 250);
-  --sidebar-ring: oklch(0.60 0.15 200);
+  --sidebar-accent: oklch(0.95 0.015 220);
+  --sidebar-accent-foreground: oklch(0.30 0.03 250);
+  --sidebar-border: oklch(0.92 0.008 250);
+  --sidebar-ring: oklch(0.55 0.14 220);
 
   /* 自訂金融色彩 */
-  --bullish: oklch(0.55 0.18 165);   /* 多頭綠 */
-  --bearish: oklch(0.55 0.22 25);    /* 空頭紅 */
-  --warning: oklch(0.70 0.15 85);    /* 警告琥珀 */
-  --info: oklch(0.60 0.15 200);      /* 資訊青 */
-  --ai-glow: oklch(0.55 0.20 290);   /* AI紫光 */
+  --bullish: oklch(0.58 0.16 160);   /* 多頭綠 */
+  --bearish: oklch(0.58 0.18 20);    /* 空頭紅 */
+  --warning: oklch(0.72 0.14 80);    /* 警告琥珀 */
+  --info: oklch(0.60 0.14 220);      /* 資訊天藍 */
+  --ai-glow: oklch(0.60 0.18 280);   /* AI紫光 */
+  
+  /* AIGC 裝飾色彩 */
+  --gradient-start: oklch(0.92 0.04 220);
+  --gradient-mid: oklch(0.94 0.03 280);
+  --gradient-end: oklch(0.96 0.02 160);
 }
 
 /* ============================================
@@ -85,65 +90,70 @@
    ============================================ */
 .dark {
   /* 基礎背景與前景 */
-  --background: oklch(0.12 0.02 250);
+  --background: oklch(0.14 0.015 250);
   --foreground: oklch(0.95 0.01 250);
 
   /* 卡片樣式 - 玻璃擬態效果 */
-  --card: oklch(0.16 0.02 250);
+  --card: oklch(0.18 0.015 250);
   --card-foreground: oklch(0.95 0.01 250);
 
   /* 彈出層樣式 */
-  --popover: oklch(0.18 0.02 250);
+  --popover: oklch(0.20 0.015 250);
   --popover-foreground: oklch(0.95 0.01 250);
 
-  /* 主色調 - 亮青色 */
-  --primary: oklch(0.75 0.12 200);
-  --primary-foreground: oklch(0.12 0.02 250);
+  /* 主色調 - 亮天藍色 */
+  --primary: oklch(0.72 0.12 220);
+  --primary-foreground: oklch(0.14 0.015 250);
 
   /* 次要色調 */
-  --secondary: oklch(0.22 0.02 250);
+  --secondary: oklch(0.24 0.015 250);
   --secondary-foreground: oklch(0.90 0.01 250);
 
   /* 靜音色調 */
-  --muted: oklch(0.22 0.02 250);
-  --muted-foreground: oklch(0.65 0.02 250);
+  --muted: oklch(0.24 0.015 250);
+  --muted-foreground: oklch(0.62 0.02 250);
 
   /* 強調色調 */
-  --accent: oklch(0.25 0.03 200);
+  --accent: oklch(0.28 0.025 220);
   --accent-foreground: oklch(0.90 0.01 250);
 
   /* 危險/空頭色調 */
-  --destructive: oklch(0.50 0.20 25);
-  --destructive-foreground: oklch(0.95 0.01 25);
+  --destructive: oklch(0.55 0.18 20);
+  --destructive-foreground: oklch(0.95 0.01 20);
 
   /* 邊框與輸入框 */
-  --border: oklch(0.28 0.02 250);
-  --input: oklch(0.22 0.02 250);
-  --ring: oklch(0.60 0.12 200);
+  --border: oklch(0.30 0.015 250);
+  --input: oklch(0.24 0.015 250);
+  --ring: oklch(0.65 0.12 220);
 
   /* 圖表配色 - 深色模式優化 */
-  --chart-1: oklch(0.65 0.20 165);   /* 翡翠綠 */
-  --chart-2: oklch(0.60 0.22 25);    /* 玫瑰色 */
-  --chart-3: oklch(0.70 0.15 200);   /* 青色 */
-  --chart-4: oklch(0.75 0.15 85);    /* 琥珀色 */
-  --chart-5: oklch(0.65 0.20 290);   /* 紫羅蘭 */
+  --chart-1: oklch(0.65 0.18 160);
+  --chart-2: oklch(0.62 0.20 20);
+  --chart-3: oklch(0.68 0.14 220);
+  --chart-4: oklch(0.75 0.14 80);
+  --chart-5: oklch(0.65 0.18 280);
 
   /* 側邊欄樣式 */
-  --sidebar: oklch(0.10 0.02 250);
+  --sidebar: oklch(0.12 0.015 250);
   --sidebar-foreground: oklch(0.90 0.01 250);
-  --sidebar-primary: oklch(0.70 0.15 200);
-  --sidebar-primary-foreground: oklch(0.12 0.02 250);
-  --sidebar-accent: oklch(0.18 0.02 250);
+  --sidebar-primary: oklch(0.68 0.14 220);
+  --sidebar-primary-foreground: oklch(0.14 0.015 250);
+  --sidebar-accent: oklch(0.20 0.015 250);
   --sidebar-accent-foreground: oklch(0.90 0.01 250);
-  --sidebar-border: oklch(0.22 0.02 250);
-  --sidebar-ring: oklch(0.70 0.15 200);
+  --sidebar-border: oklch(0.25 0.015 250);
+  --sidebar-ring: oklch(0.68 0.14 220);
 
   /* 自訂金融色彩 - 深色模式 */
-  --bullish: oklch(0.65 0.20 165);
-  --bearish: oklch(0.60 0.22 25);
-  --warning: oklch(0.75 0.15 85);
-  --info: oklch(0.70 0.15 200);
-  --ai-glow: oklch(0.65 0.20 290);
+  --bullish: oklch(0.65 0.18 160);
+  --bearish: oklch(0.62 0.20 20);
+  --warning: oklch(0.75 0.14 80);
+  --info: oklch(0.68 0.14 220);
+  --ai-glow: oklch(0.65 0.18 280);
+  
+  /* AIGC 裝飾色彩 - 深色模式 */
+  --gradient-start: oklch(0.25 0.04 220);
+  --gradient-mid: oklch(0.22 0.03 280);
+  --gradient-end: oklch(0.20 0.02 160);
 }
 
 /* ============================================
@@ -185,10 +195,16 @@
   --color-info: var(--info);
   --color-ai-glow: var(--ai-glow);
   
+  /* AIGC 漸層色彩 */
+  --color-gradient-start: var(--gradient-start);
+  --color-gradient-mid: var(--gradient-mid);
+  --color-gradient-end: var(--gradient-end);
+  
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
   
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
@@ -212,10 +228,10 @@
     @apply bg-background text-foreground;
   }
   
-  /* 滾動條樣式 */
+  /* 滾動條樣式 - 更細緻 */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
   
   ::-webkit-scrollbar-track {
@@ -224,54 +240,102 @@
   
   ::-webkit-scrollbar-thumb {
     background: var(--muted-foreground);
-    border-radius: 4px;
-    opacity: 0.5;
+    border-radius: 3px;
+    opacity: 0.3;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    opacity: 0.8;
+    opacity: 0.5;
   }
 }
 
 /* ============================================
-   元件樣式
+   元件樣式 - AIGC 風格
    ============================================ */
 @layer components {
-  /* 玻璃擬態卡片效果 */
+  /* 玻璃擬態卡片效果 - 更通透 */
   .glass-card {
     background: linear-gradient(
       135deg,
-      oklch(1 0 0 / 0.8),
-      oklch(0.98 0.005 250 / 0.6)
+      oklch(1 0 0 / 0.95),
+      oklch(0.98 0.004 250 / 0.85)
     );
-    backdrop-filter: blur(12px);
-    border: 1px solid oklch(0.90 0.01 250 / 0.5);
+    backdrop-filter: blur(20px);
+    border: 1px solid oklch(0.92 0.008 250 / 0.6);
+    box-shadow: 
+      0 4px 6px -1px oklch(0 0 0 / 0.05),
+      0 2px 4px -2px oklch(0 0 0 / 0.05),
+      inset 0 1px 0 0 oklch(1 0 0 / 0.5);
   }
   
   .dark .glass-card {
     background: linear-gradient(
       135deg,
-      oklch(0.18 0.02 250 / 0.8),
-      oklch(0.14 0.02 250 / 0.6)
+      oklch(0.20 0.015 250 / 0.9),
+      oklch(0.16 0.015 250 / 0.8)
     );
-    border: 1px solid oklch(0.28 0.02 250 / 0.5);
+    border: 1px solid oklch(0.30 0.015 250 / 0.4);
+    box-shadow: 
+      0 4px 6px -1px oklch(0 0 0 / 0.2),
+      0 2px 4px -2px oklch(0 0 0 / 0.1),
+      inset 0 1px 0 0 oklch(1 0 0 / 0.05);
   }
   
-  /* AI 發光效果 */
+  /* AIGC 風格漸層背景 */
+  .aigc-gradient {
+    background: linear-gradient(
+      135deg,
+      var(--gradient-start) 0%,
+      var(--gradient-mid) 50%,
+      var(--gradient-end) 100%
+    );
+  }
+  
+  /* AI 發光效果 - 更柔和 */
   .ai-glow {
-    box-shadow: 0 0 20px oklch(0.55 0.20 290 / 0.3);
+    box-shadow: 
+      0 0 30px oklch(0.60 0.18 280 / 0.15),
+      0 0 60px oklch(0.60 0.14 220 / 0.1);
   }
   
   .dark .ai-glow {
-    box-shadow: 0 0 25px oklch(0.65 0.20 290 / 0.4);
+    box-shadow: 
+      0 0 40px oklch(0.65 0.18 280 / 0.25),
+      0 0 80px oklch(0.68 0.14 220 / 0.15);
   }
   
-  /* 多頭漸層背景 */
+  /* AI 徽章光暈 */
+  .ai-badge-glow {
+    position: relative;
+  }
+  
+  .ai-badge-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(
+      135deg,
+      oklch(0.60 0.18 280 / 0.3),
+      oklch(0.60 0.14 220 / 0.3),
+      oklch(0.58 0.16 160 / 0.3)
+    );
+    border-radius: inherit;
+    z-index: -1;
+    filter: blur(8px);
+    animation: badge-pulse 3s ease-in-out infinite;
+  }
+  
+  @keyframes badge-pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  
+  /* 多頭漸層背景 - 更清爽 */
   .bullish-gradient {
     background: linear-gradient(
       135deg,
-      oklch(0.55 0.18 165 / 0.1),
-      oklch(0.55 0.18 165 / 0.05)
+      oklch(0.58 0.16 160 / 0.08),
+      oklch(0.58 0.16 160 / 0.02)
     );
   }
   
@@ -279,50 +343,184 @@
   .bearish-gradient {
     background: linear-gradient(
       135deg,
-      oklch(0.55 0.22 25 / 0.1),
-      oklch(0.55 0.22 25 / 0.05)
+      oklch(0.58 0.18 20 / 0.08),
+      oklch(0.58 0.18 20 / 0.02)
     );
   }
   
-  /* 神經網路裝飾背景 */
+  /* 神經網路裝飾背景 - 更精緻 */
   .neural-pattern {
-    background-image: 
-      radial-gradient(circle at 20% 80%, oklch(0.55 0.20 290 / 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, oklch(0.60 0.15 200 / 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, oklch(0.55 0.18 165 / 0.03) 0%, transparent 30%);
+    position: relative;
+    overflow: hidden;
   }
   
-  .dark .neural-pattern {
+  .neural-pattern::before {
+    content: '';
+    position: absolute;
+    inset: 0;
     background-image: 
-      radial-gradient(circle at 20% 80%, oklch(0.65 0.20 290 / 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, oklch(0.70 0.15 200 / 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, oklch(0.65 0.20 165 / 0.05) 0%, transparent 30%);
+      radial-gradient(circle at 15% 85%, oklch(0.60 0.18 280 / 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 85% 15%, oklch(0.60 0.14 220 / 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, oklch(0.58 0.16 160 / 0.04) 0%, transparent 35%),
+      radial-gradient(circle at 25% 25%, oklch(0.72 0.14 80 / 0.03) 0%, transparent 30%);
+    pointer-events: none;
   }
   
-  /* 數據流動畫效果 */
-  .data-stream {
+  .dark .neural-pattern::before {
+    background-image: 
+      radial-gradient(circle at 15% 85%, oklch(0.65 0.18 280 / 0.12) 0%, transparent 40%),
+      radial-gradient(circle at 85% 15%, oklch(0.68 0.14 220 / 0.12) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, oklch(0.65 0.18 160 / 0.08) 0%, transparent 35%),
+      radial-gradient(circle at 25% 25%, oklch(0.75 0.14 80 / 0.06) 0%, transparent 30%);
+  }
+  
+  /* 流動線條動畫 */
+  .flowing-lines {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .flowing-lines::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
     background: linear-gradient(
       90deg,
       transparent 0%,
-      oklch(0.60 0.15 200 / 0.2) 50%,
+      oklch(0.60 0.14 220 / 0.1) 50%,
       transparent 100%
     );
-    animation: stream 3s linear infinite;
+    animation: flow 4s linear infinite;
   }
   
-  @keyframes stream {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+  @keyframes flow {
+    0% { left: -50%; }
+    100% { left: 150%; }
   }
   
-  /* 脈衝動畫效果 */
-  .pulse-dot {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  /* 數據點脈衝 */
+  .data-pulse {
+    position: relative;
   }
   
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+  .data-pulse::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    animation: data-pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes data-pulse {
+    0%, 100% { 
+      box-shadow: 0 0 0 0 oklch(0.60 0.14 220 / 0.4);
+    }
+    50% { 
+      box-shadow: 0 0 0 8px oklch(0.60 0.14 220 / 0);
+    }
+  }
+  
+  /* 圖標容器裝飾 */
+  .icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+      135deg,
+      oklch(0.96 0.015 220 / 0.8),
+      oklch(0.94 0.02 280 / 0.6)
+    );
+    border-radius: var(--radius);
+    transition: all 0.3s ease;
+  }
+  
+  .icon-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px oklch(0.60 0.14 220 / 0.15);
+  }
+  
+  .dark .icon-container {
+    background: linear-gradient(
+      135deg,
+      oklch(0.25 0.02 220 / 0.8),
+      oklch(0.22 0.025 280 / 0.6)
+    );
+  }
+  
+  /* 卡片懸浮效果 */
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      0 20px 40px oklch(0 0 0 / 0.08),
+      0 8px 16px oklch(0 0 0 / 0.04);
+  }
+  
+  .dark .card-hover:hover {
+    box-shadow: 
+      0 20px 40px oklch(0 0 0 / 0.3),
+      0 8px 16px oklch(0 0 0 / 0.2);
+  }
+  
+  /* 裝飾圓圈 */
+  .decorative-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(
+      135deg,
+      oklch(0.60 0.14 220 / 0.1),
+      oklch(0.60 0.18 280 / 0.1)
+    );
+    filter: blur(40px);
+    pointer-events: none;
+  }
+  
+  /* 網格裝飾 */
+  .grid-pattern {
+    background-image: 
+      linear-gradient(oklch(0.92 0.008 250 / 0.5) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(0.92 0.008 250 / 0.5) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  
+  .dark .grid-pattern {
+    background-image: 
+      linear-gradient(oklch(0.30 0.015 250 / 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(0.30 0.015 250 / 0.3) 1px, transparent 1px);
+  }
+  
+  /* 標籤徽章 */
+  .tag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 9999px;
+    background: linear-gradient(
+      135deg,
+      oklch(0.96 0.02 220 / 0.9),
+      oklch(0.94 0.025 280 / 0.7)
+    );
+    color: oklch(0.35 0.08 250);
+    border: 1px solid oklch(0.90 0.015 250 / 0.5);
+  }
+  
+  .dark .tag-badge {
+    background: linear-gradient(
+      135deg,
+      oklch(0.25 0.025 220 / 0.9),
+      oklch(0.22 0.03 280 / 0.7)
+    );
+    color: oklch(0.90 0.01 250);
+    border: 1px solid oklch(0.35 0.02 250 / 0.5);
   }
 }
 
@@ -385,9 +583,17 @@
     background-color: oklch(from var(--bullish) l c h / 0.1);
   }
   
+  .bg-bullish\/5 {
+    background-color: oklch(from var(--bullish) l c h / 0.05);
+  }
+  
   /* 半透明空頭背景 */
   .bg-bearish\/10 {
     background-color: oklch(from var(--bearish) l c h / 0.1);
+  }
+  
+  .bg-bearish\/5 {
+    background-color: oklch(from var(--bearish) l c h / 0.05);
   }
   
   /* 半透明警告背景 */
@@ -398,5 +604,34 @@
   /* 半透明AI背景 */
   .bg-ai\/10 {
     background-color: oklch(from var(--ai-glow) l c h / 0.1);
+  }
+  
+  .bg-ai\/5 {
+    background-color: oklch(from var(--ai-glow) l c h / 0.05);
+  }
+  
+  /* 漸層文字 */
+  .text-gradient {
+    background: linear-gradient(
+      135deg,
+      oklch(0.35 0.08 250),
+      oklch(0.55 0.14 220),
+      oklch(0.60 0.18 280)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .dark .text-gradient {
+    background: linear-gradient(
+      135deg,
+      oklch(0.72 0.12 220),
+      oklch(0.68 0.14 250),
+      oklch(0.65 0.18 280)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
