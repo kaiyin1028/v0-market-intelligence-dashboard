@@ -452,10 +452,10 @@ export function AIAnalystContent() {
                   </p>
                 </div>
                 <div className="flex flex-col items-end gap-1">
-                  <ScoreGauge score={標的.評分} label="" size="xs" />
+                  <ScoreGauge score={標的.評分} label="" size="sm" />
                   <SignalBadge
-                    signal={標的.訊號 as "買入" | "賣出" | "觀望"}
-                    strength={標的.評分}
+                    signal={標的.訊號 === "買入" ? "buy" : 標的.訊號 === "賣出" ? "sell" : "hold"}
+                    size="sm"
                   />
                 </div>
               </div>
