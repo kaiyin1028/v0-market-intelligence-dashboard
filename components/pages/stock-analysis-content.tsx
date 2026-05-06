@@ -9,6 +9,7 @@
  */
 
 import { useState, useMemo } from "react"
+import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
@@ -144,11 +145,43 @@ export function StockAnalysisContent() {
 
   return (
     <div className="space-y-6">
-      {/* 頂部 AIGC 裝飾背景 */}
-      <div className="absolute inset-x-0 top-0 -z-10 h-[400px] overflow-hidden">
-        <div className="absolute left-1/4 top-20 h-72 w-72 rounded-full bg-gradient-to-br from-primary/10 to-transparent blur-3xl" />
-        <div className="absolute right-1/4 top-40 h-64 w-64 rounded-full bg-gradient-to-br from-chart-1/10 to-transparent blur-3xl" />
-        <div className="neural-network-bg absolute inset-0 opacity-30" />
+      {/* 頂部 AIGC 裝飾背景 - 包含 AI 生成圖片 */}
+      <div className="absolute inset-x-0 top-0 -z-10 h-[500px] overflow-hidden">
+        {/* AI 生成的圖表背景圖片 */}
+        <div className="absolute top-0 right-0 w-[700px] h-[500px] opacity-[0.04] dark:opacity-[0.08]">
+          <Image
+            src="/images/ai-chart-pattern.jpg"
+            alt=""
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-l from-transparent via-background/60 to-background" />
+        </div>
+        
+        {/* 彩色漸層球體裝飾 */}
+        <div className="absolute left-1/4 top-20 h-72 w-72 rounded-full bg-gradient-to-br from-emerald-500/10 via-cyan-500/5 to-transparent blur-3xl animate-pulse" />
+        <div className="absolute right-1/4 top-40 h-64 w-64 rounded-full bg-gradient-to-br from-violet-500/10 via-blue-500/5 to-transparent blur-3xl" />
+        <div className="absolute left-1/2 top-10 h-48 w-48 rounded-full bg-gradient-to-br from-amber-500/8 via-rose-500/4 to-transparent blur-3xl" />
+        
+        {/* 神經網路背景圖案 */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.015]" viewBox="0 0 1200 500">
+          <defs>
+            <linearGradient id="stockGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#10b981" />
+              <stop offset="50%" stopColor="#06b6d4" />
+              <stop offset="100%" stopColor="#8b5cf6" />
+            </linearGradient>
+          </defs>
+          <path d="M0,150 Q300,50 600,150 T1200,150" stroke="url(#stockGradient)" strokeWidth="2" fill="none" />
+          <path d="M0,300 Q400,200 800,300 T1200,300" stroke="url(#stockGradient)" strokeWidth="2" fill="none" />
+          <circle cx="200" cy="140" r="8" fill="#10b981" />
+          <circle cx="500" cy="160" r="10" fill="#06b6d4" />
+          <circle cx="800" cy="145" r="7" fill="#8b5cf6" />
+          <circle cx="350" cy="290" r="9" fill="#f59e0b" />
+          <circle cx="650" cy="310" r="8" fill="#ec4899" />
+          <circle cx="950" cy="295" r="11" fill="#3b82f6" />
+        </svg>
       </div>
 
       {/* 頂部搜尋與股票資訊區 */}

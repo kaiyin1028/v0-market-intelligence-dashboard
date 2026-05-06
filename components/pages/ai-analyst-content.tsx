@@ -6,6 +6,7 @@
  */
 
 import { useState, useRef, useEffect } from "react"
+import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -234,7 +235,22 @@ export function AIAnalystContent() {
   }
 
   return (
-    <div className="grid h-[calc(100vh-10rem)] gap-6 lg:grid-cols-3">
+    <div className="relative grid h-[calc(100vh-10rem)] gap-6 lg:grid-cols-3">
+      {/* AIGC 裝飾背景 - AI Brain 圖片 */}
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute right-0 top-0 h-[500px] w-[600px] opacity-[0.03] dark:opacity-[0.06]">
+          <Image
+            src="/images/ai-brain.jpg"
+            alt=""
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-l from-transparent via-background/50 to-background" />
+        </div>
+        <div className="absolute bottom-1/4 left-10 h-64 w-64 rounded-full bg-gradient-to-br from-violet-500/10 to-blue-500/5 blur-3xl" />
+        <div className="absolute right-1/4 top-1/3 h-48 w-48 rounded-full bg-gradient-to-br from-cyan-500/8 to-emerald-500/4 blur-3xl animate-pulse" />
+      </div>
+      
       {/* 左側：AI 對話區 */}
       <Card className="glass-card flex flex-col border-border/50 lg:col-span-2">
         <CardHeader className="border-b border-border/50 pb-3">
@@ -289,8 +305,7 @@ export function AIAnalystContent() {
                       )}
                       {訊息.分析數據.訊號 && (
                         <SignalBadge
-                          signal={訊息.分析數據.訊號 as "買入" | "賣出" | "觀望"}
-                          strength={訊息.分析數據.評分 || 70}
+                          signal={訊息.分析數據.訊號 === "買入" ? "buy" : 訊息.分析數據.訊號 === "賣出" ? "sell" : "hold"}
                         />
                       )}
                     </div>
