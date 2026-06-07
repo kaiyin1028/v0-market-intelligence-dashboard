@@ -8,7 +8,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Activity, Radio, Zap, Clock, TrendingUp, TrendingDown, AlertTriangle } from 'lucide-react'
+import { Activity, Radio, Zap, Clock, TrendingUp, TrendingDown, AlertTriangle, Minus, ArrowDownRight } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { SignalBadge } from '@/components/dashboard/signal-badge'
 import { cn } from '@/lib/utils'
@@ -31,6 +31,10 @@ const signalIconConfig: Record<SignalType, { icon: React.ComponentType<{ classNa
   buy: { icon: TrendingUp, color: 'text-success' },
   sell: { icon: TrendingDown, color: 'text-danger' },
   hold: { icon: Activity, color: 'text-warning' },
+  watch: { icon: Clock, color: 'text-primary' },
+  reduce: { icon: Minus, color: 'text-warning' },
+  'strong-buy': { icon: Zap, color: 'text-success' },
+  short: { icon: ArrowDownRight, color: 'text-danger' },
   breakout: { icon: Zap, color: 'text-primary' },
   false_breakout: { icon: AlertTriangle, color: 'text-danger' },
   accumulation: { icon: TrendingUp, color: 'text-success' },

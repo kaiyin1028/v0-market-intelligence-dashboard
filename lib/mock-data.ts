@@ -197,7 +197,7 @@ export const aiAnalysis: AIAnalysis = {
   bearishRisks: [
     '接近前高壓力區，短期可能震盪',
     'RSI 接近超買區域，需注意回檔風險',
-    '大盤若轉弱可能拖累個股表現',
+    '美股大盤或恆生指數若轉弱可能拖累個股表現',
   ],
   keyLevels: {
     support: [186.50, 183.20, 180.00],

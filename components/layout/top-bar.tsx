@@ -6,8 +6,10 @@
  * 明亮清爽專業風格設計
  */
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useTheme } from 'next-themes'
+import { useRouter } from 'next/navigation'
+import { searchStocks } from '@/lib/api'
 import {
   Search,
   Bell,
@@ -34,6 +36,8 @@ import {
   AlertCircle,
   CheckCircle2,
   Info,
+  WifiOff,
+  Database,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -53,9 +57,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
 import { SidebarNav } from './sidebar-nav'
+import { useApiStatus } from '@/hooks/use-api-status'
+import { useAIStatus } from '@/hooks/use-ai-status'
 
 /** 時間週期選項 */
 const timeframes = [
@@ -144,8 +150,38 @@ interface TopBarProps {
 
 export function TopBar({ sidebarCollapsed = false }: TopBarProps) {
   const { theme, setTheme } = useTheme()
+  const router = useRouter()
   const [timeframe, setTimeframe] = useState('1D')
   const [searchQuery, setSearchQuery] = useState('')
+  const [searchLoading, setSearchLoading] = useState(false)
+  const apiStatus = useApiStatus()
+  const aiStatus = useAIStatus()
+
+  const providerName = aiStatus.provider === 'kimi' ? 'Kimi' : 'Ollama'
+  const aiStatusLabel = aiStatus.status === 'online'
+    ? `${providerName} 線上 (${aiStatus.effectiveModel})`
+    : aiStatus.status === 'fallback'
+    ? `${providerName} 降級 → ${aiStatus.effectiveModel}`
+    : `${providerName} 離線`
+
+  const handleSearch = useCallback(async () => {
+    const query = searchQuery.trim().toUpperCase()
+    if (!query) return
+    setSearchLoading(true)
+    try {
+      const results = await searchStocks(query)
+      if (results && results.length > 0) {
+        router.push(`/stock-analysis?ticker=${encodeURIComponent(results[0].ticker)}`)
+        setSearchQuery('')
+      } else {
+        alert(`找不到股票「${query}」，請檢查代號是否正確`)
+      }
+    } catch (err) {
+      alert('搜尋失敗，請稍後再試')
+    } finally {
+      setSearchLoading(false)
+    }
+  }, [searchQuery, router])
 
   // 模擬市場狀態
   const marketStatus = {
@@ -181,6 +217,10 @@ export function TopBar({ sidebarCollapsed = false }: TopBarProps) {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-64 p-0">
+              <SheetHeader className="sr-only">
+                <SheetTitle>選單</SheetTitle>
+                <SheetDescription>導航選單</SheetDescription>
+              </SheetHeader>
               <SidebarNav />
             </SheetContent>
           </Sheet>
@@ -195,6 +235,13 @@ export function TopBar({ sidebarCollapsed = false }: TopBarProps) {
               placeholder="搜尋股票代碼、公司名稱..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault()
+                  handleSearch()
+                }
+              }}
+              disabled={searchLoading}
               className="w-64 bg-muted/30 pl-9 pr-20 rounded-xl border-border/50 focus:border-primary/50 focus:bg-background lg:w-80"
             />
             <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
@@ -242,6 +289,61 @@ export function TopBar({ sidebarCollapsed = false }: TopBarProps) {
               )}
               {marketStatus.change}
             </div>
+          </div>
+
+          {/* API 連線狀態 */}
+          <div className="hidden items-center gap-2 rounded-xl bg-muted/30 border border-border/40 px-3 py-1.5 md:flex">
+            <div className="relative">
+              {apiStatus === 'connected' ? (
+                <Wifi className="h-4 w-4 text-success" />
+              ) : apiStatus === 'mock' ? (
+                <Database className="h-4 w-4 text-warning" />
+              ) : (
+                <WifiOff className="h-4 w-4 text-danger" />
+              )}
+              <div
+                className={cn(
+                  'absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-background',
+                  apiStatus === 'connected' ? 'bg-success' :
+                  apiStatus === 'mock' ? 'bg-warning' : 'bg-danger'
+                )}
+              />
+            </div>
+            <span className={cn(
+              'text-xs font-medium whitespace-nowrap',
+              apiStatus === 'connected' ? 'text-success' :
+              apiStatus === 'mock' ? 'text-warning' : 'text-danger'
+            )}>
+              {apiStatus === 'connected' ? '已連線' :
+               apiStatus === 'mock' ? '模擬模式' : '未連線'}
+            </span>
+          </div>
+
+          {/* AI 狀態指示器 */}
+          <div className="hidden items-center gap-2 rounded-xl bg-muted/30 border border-border/40 px-3 py-1.5 md:flex">
+            <div className="relative">
+              {aiStatus.status === 'online' ? (
+                <Sparkles className="h-4 w-4 text-success" />
+              ) : aiStatus.status === 'fallback' ? (
+                <Sparkles className="h-4 w-4 text-warning" />
+              ) : (
+                <Sparkles className="h-4 w-4 text-muted-foreground" />
+              )}
+              <div
+                className={cn(
+                  'absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-background',
+                  aiStatus.status === 'online' ? 'bg-success' :
+                  aiStatus.status === 'fallback' ? 'bg-warning' : 'bg-muted-foreground'
+                )}
+              />
+            </div>
+            <span className={cn(
+              'text-xs font-medium whitespace-nowrap',
+              aiStatus.status === 'online' ? 'text-success' :
+              aiStatus.status === 'fallback' ? 'text-warning' : 'text-muted-foreground'
+            )}>
+              {aiStatusLabel}
+            </span>
           </div>
 
           {/* 時間週期選擇器 */}

@@ -1,0 +1,549 @@
+INFO:     Started server process [3714405]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:6061 (Press CTRL+C to quit)
+INFO:     127.0.0.1:43264 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43276 - "OPTIONS /api/v1/market/overview HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57297 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:43:13,134 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:57298 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57340 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:43:27,886 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:57340 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:43:29,418 [WARNING] app.services.futu_service: Futu snapshots failed: FutuOpenD is not reachable at 127.0.0.1:11111
+INFO:     192.168.31.30:40414 - "GET /api/v1/market/overview HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57340 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57429 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:43:42,884 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:57430 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57474 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:43:57,870 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:57474 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57474 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57559 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:44:12,885 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:57560 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57607 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57607 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57607 - "OPTIONS /api/v1/market/overview HTTP/1.1" 200 OK
+2026-05-08 00:44:27,459 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-08 00:44:27,460 [WARNING] app.services.futu_service: Futu snapshots failed: FutuOpenD is not reachable at 127.0.0.1:11111
+INFO:     192.168.31.1:57634 - "GET /api/v1/market/overview HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57633 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57677 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:44:42,449 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:57677 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57677 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:44:47,683 [WARNING] app.services.futu_service: Futu snapshots failed: FutuOpenD is not reachable at 127.0.0.1:11111
+INFO:     192.168.31.30:36016 - "GET /api/v1/market/overview HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57768 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:44:57,490 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:57769 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57812 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:45:12,448 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:57812 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57812 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57896 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:45:27,451 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:57897 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57939 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:45:42,447 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:57939 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:57939 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58027 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:45:57,464 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58028 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58071 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:46:12,487 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58071 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58071 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58156 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:46:27,490 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58157 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58200 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:46:42,456 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58200 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58200 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58289 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:46:57,447 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58290 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58335 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:47:12,485 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58335 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58335 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58419 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:47:27,501 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58420 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58462 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:47:42,443 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58462 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58462 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58549 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:47:57,459 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58550 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58593 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:48:12,445 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58593 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58593 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58678 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:48:27,490 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58679 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58722 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:48:42,448 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58722 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58722 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58806 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:48:57,462 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58807 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58849 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:49:12,443 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58849 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58849 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58934 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:49:27,446 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58935 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58978 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:49:42,484 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58978 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58978 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59061 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:49:57,448 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59062 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59104 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:50:12,441 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59104 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59104 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59189 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:50:27,477 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59190 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59238 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:50:42,447 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59238 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59238 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59324 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:50:57,446 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59325 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59368 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:51:12,486 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59368 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59368 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59453 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:51:27,448 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59454 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59502 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:51:42,487 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59502 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59502 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59586 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:51:57,503 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59587 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59629 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:52:12,484 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59629 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59629 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59713 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:52:27,489 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59714 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59756 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:52:42,483 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59756 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59756 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59843 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:52:57,449 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59844 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59888 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:53:12,446 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59888 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59888 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:59972 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:53:27,500 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:59973 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60015 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:53:42,483 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60015 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60015 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60099 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:53:57,452 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60100 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60142 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:54:12,453 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60142 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60142 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60226 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:54:27,443 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60227 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60271 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:54:42,440 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60271 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58166 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58168 - "OPTIONS /api/v1/market/overview HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60271 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:54:47,417 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58167 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:54:47,461 [WARNING] app.services.futu_service: Futu snapshots failed: FutuOpenD is not reachable at 127.0.0.1:11111
+INFO:     192.168.31.1:58167 - "GET /api/v1/market/overview HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58171 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60359 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:54:57,486 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60360 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:55:02,515 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58174 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58174 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60402 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:55:12,482 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60402 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58180 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60402 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:55:17,475 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58179 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58188 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60486 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:55:27,455 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60487 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58188 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58188 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58195 - "OPTIONS /api/v1/stocks/AAPL/analysis?timeframe=1d HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58194 - "OPTIONS /api/v1/stocks/AAPL/analysis?timeframe=1d HTTP/1.1" 200 OK
+2026-05-08 00:55:27,715 [WARNING] app.services.futu_service: Futu snapshot failed for AAPL: FutuOpenD is not reachable at 127.0.0.1:11111
+2026-05-08 00:55:27,858 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-08 00:55:27,860 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 404 Not Found"
+INFO:     192.168.31.1:58193 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:55:27,862 [WARNING] app.services.ollama_service: Ollama generate failed: Client error '404 Not Found' for url 'http://localhost:11434/api/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-05-08 00:55:27,862 [WARNING] app.services.ai_service: analyze_stock: Ollama unavailable, returning mock for AAPL
+INFO:     192.168.31.1:58188 - "GET /api/v1/stocks/AAPL/analysis?timeframe=1d HTTP/1.1" 200 OK
+2026-05-08 00:55:27,941 [WARNING] app.services.futu_service: Futu snapshot failed for AAPL: FutuOpenD is not reachable at 127.0.0.1:11111
+2026-05-08 00:55:28,034 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58194 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:55:28,039 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 404 Not Found"
+2026-05-08 00:55:28,040 [WARNING] app.services.ollama_service: Ollama generate failed: Client error '404 Not Found' for url 'http://localhost:11434/api/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-05-08 00:55:28,040 [WARNING] app.services.ai_service: analyze_stock: Ollama unavailable, returning mock for AAPL
+INFO:     192.168.31.1:58193 - "GET /api/v1/stocks/AAPL/analysis?timeframe=1d HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60529 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58196 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:55:42,483 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60529 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:55:42,717 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58196 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60529 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58196 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60617 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:55:57,487 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60618 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58206 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:55:57,716 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58207 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60661 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58211 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:56:12,444 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60661 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:56:12,782 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58214 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60661 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58214 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60745 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:56:27,462 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60746 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58221 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:56:27,700 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58222 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60788 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58230 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:56:42,484 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60788 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:56:42,852 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58234 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60788 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58234 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60877 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:56:57,444 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60878 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58240 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:56:57,698 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58239 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60920 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58245 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:57:12,440 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:60920 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:57:12,706 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58245 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:60920 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58247 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61007 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:57:27,485 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61008 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58252 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:57:27,729 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58253 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61051 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58258 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:57:42,480 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61051 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:57:42,716 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58258 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61051 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58258 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61135 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:57:57,483 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61136 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58267 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:57:57,777 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58268 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61179 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58272 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:58:12,449 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61179 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:58:12,708 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58272 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61179 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58272 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61262 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:58:27,441 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61263 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58288 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:58:27,769 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58289 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61306 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58294 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:58:42,438 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61306 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:58:42,696 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58294 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61306 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58294 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61395 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:58:57,479 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61396 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58303 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:58:57,713 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58304 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61441 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58308 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:59:12,436 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61441 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:59:12,702 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58308 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61441 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58308 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61524 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:59:27,481 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61525 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58314 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:59:27,739 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58315 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61567 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58323 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:59:42,437 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61567 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 00:59:42,907 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58323 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61567 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58323 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61646 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:59:57,441 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61647 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58349 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 00:59:57,938 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58350 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61693 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58354 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:00:12,438 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61693 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 01:00:12,967 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58356 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61693 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58356 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61778 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:00:27,480 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61779 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58364 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:00:27,953 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58363 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61822 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58373 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:00:42,436 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61822 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61822 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61905 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:00:57,441 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61906 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:61948 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58390 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:01:12,237 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58389 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 01:01:12,462 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:61948 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58389 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58399 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:01:17,141 [WARNING] app.services.futu_service: Futu snapshot failed for AAPL: FutuOpenD is not reachable at 127.0.0.1:11111
+2026-05-08 01:01:17,250 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58390 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 01:01:17,264 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 404 Not Found"
+2026-05-08 01:01:17,336 [WARNING] app.services.ollama_service: Ollama generate failed: Client error '404 Not Found' for url 'http://localhost:11434/api/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-05-08 01:01:17,337 [WARNING] app.services.ai_service: analyze_stock: Ollama unavailable, returning mock for AAPL
+INFO:     192.168.31.1:58389 - "GET /api/v1/stocks/AAPL/analysis?timeframe=1d HTTP/1.1" 200 OK
+2026-05-08 01:01:17,344 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58399 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 01:01:17,347 [WARNING] app.services.futu_service: Futu snapshot failed for AAPL: FutuOpenD is not reachable at 127.0.0.1:11111
+INFO:     192.168.31.1:61948 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:01:17,448 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 404 Not Found"
+2026-05-08 01:01:17,449 [WARNING] app.services.ollama_service: Ollama generate failed: Client error '404 Not Found' for url 'http://localhost:11434/api/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-05-08 01:01:17,449 [WARNING] app.services.ai_service: analyze_stock: Ollama unavailable, returning mock for AAPL
+INFO:     192.168.31.1:58390 - "GET /api/v1/stocks/AAPL/analysis?timeframe=1d HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62031 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:01:27,478 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62032 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58416 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:01:32,964 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58512 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62075 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58512 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:01:42,435 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62075 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62075 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58547 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:01:47,957 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58546 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62164 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:01:57,441 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62165 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58557 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:02:02,905 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58557 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62208 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58557 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:02:12,490 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62208 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62208 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58564 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:02:17,963 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58565 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62291 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:02:27,481 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62292 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 01:02:33,005 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58572 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62335 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58597 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:02:42,453 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62335 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62335 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:02:47,967 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58604 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62418 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:02:57,439 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62419 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62464 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:03:12,493 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62486 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62486 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62557 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:03:27,438 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62558 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62603 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58636 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:03:42,097 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58635 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 01:03:42,450 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62603 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62603 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62687 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:03:57,440 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62688 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62730 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:04:12,477 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62730 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62730 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62815 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:04:27,491 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62816 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62863 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58655 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:04:41,985 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58654 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 01:04:42,481 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62863 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62863 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62948 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:04:57,440 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62949 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62993 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:05:12,480 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:62993 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:62993 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63076 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:05:27,441 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:63077 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63119 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58681 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:05:41,953 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58682 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 01:05:42,446 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:63119 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63119 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63199 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:05:57,484 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:63200 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63246 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:06:12,437 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:63246 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63246 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63332 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:06:27,447 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:63333 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63376 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58704 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:06:41,962 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58705 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 01:06:42,467 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:63376 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63376 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63459 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:06:57,457 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:63460 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58718 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:07:02,923 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58719 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63505 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:07:12,478 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:63505 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63505 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63592 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:07:27,475 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:63593 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63637 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58737 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:07:41,932 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58738 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+2026-05-08 01:07:42,437 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:63637 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63637 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:63721 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:07:57,450 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:63722 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58753 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:08:07,909 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58754 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58772 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:08:41,990 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58773 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58797 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:09:41,928 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58798 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:64373 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.1:64375 - "OPTIONS /api/v1/market/overview HTTP/1.1" 200 OK
+2026-05-08 01:10:26,783 [WARNING] app.services.futu_service: Futu snapshots failed: FutuOpenD is not reachable at 127.0.0.1:11111
+INFO:     192.168.31.1:64373 - "GET /api/v1/market/overview HTTP/1.1" 200 OK
+2026-05-08 01:10:26,795 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:64374 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:64417 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:10:41,760 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:64417 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:58826 - "GET /health HTTP/1.1" 200 OK
+2026-05-08 01:10:42,030 [INFO] httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+INFO:     192.168.31.1:58827 - "GET /api/v1/ai/status HTTP/1.1" 200 OK
+INFO:     192.168.31.1:64417 - "GET /health HTTP/1.1" 200 OK
+/home/hkeeia/projects/AI-Stock/market-intelligence-fullstack/backend/.venv/bin/python: No module named uvicorn

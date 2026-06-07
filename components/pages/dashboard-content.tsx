@@ -6,7 +6,7 @@
  * 明亮清爽專業風格設計，增加AIGC裝飾元素和AI生成圖片
  */
 
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import {
@@ -29,28 +29,16 @@ import {
   Hexagon,
   ArrowUpRight,
   ArrowDownRight,
-  Globe,
-  Flame,
-  Clock,
   Eye,
-  Shield,
   Rocket,
   Star,
   Radio,
 } from 'lucide-react'
-import { MetricCard, AIInsightCard } from '@/components/dashboard'
+import { MetricCard } from '@/components/dashboard'
 import { SectorHeatmap, SignalFeed, FalseBreakoutTable, IndexChart } from '@/components/charts'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import {
-  marketIndices,
-  marketSummary,
-  sectorHeatmapData,
-  signalFeed,
-  falseBreakoutRisks,
-  aiAnalysis,
-} from '@/lib/mock-data'
+import { getMarketOverview } from '@/lib/api'
 import { cn } from '@/lib/utils'
 
 /** 動畫變體配置 */
@@ -71,7 +59,7 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 0.5,
-      ease: [0.25, 0.1, 0.25, 1],
+      ease: [0.25, 0.1, 0.25, 1] as const,
     },
   },
 }
@@ -256,128 +244,71 @@ function QuickActionCard({
   )
 }
 
-/** 市場情緒卡片 */
-function MarketSentimentCard() {
-  return (
-    <Card className="glass-card border-border/30 overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.03]">
-        <Image
-          src="/images/ai-data-flow.jpg"
-          alt=""
-          fill
-          className="object-cover"
-        />
-      </div>
-      <CardHeader className="relative pb-2">
-        <CardTitle className="flex items-center justify-between text-sm">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500/20 to-cyan-500/20">
-              <Gauge className="h-4 w-4 text-emerald-500" />
-            </div>
-            <span>市場情緒指數</span>
-          </div>
-          <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30">
-            偏多
-          </Badge>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="relative space-y-4">
-        {/* 情緒儀表 */}
-        <div className="relative h-4 rounded-full bg-gradient-to-r from-rose-500/20 via-amber-500/20 to-emerald-500/20 overflow-hidden">
-          <div 
-            className="absolute top-0 h-full w-1.5 bg-white shadow-lg rounded-full transition-all"
-            style={{ left: '72%' }}
-          />
-        </div>
-        <div className="flex justify-between text-[10px] text-muted-foreground">
-          <span className="text-rose-500">極度恐懼</span>
-          <span className="text-amber-500">中性</span>
-          <span className="text-emerald-500">極度貪婪</span>
-        </div>
-        
-        {/* 分項指標 */}
-        <div className="grid grid-cols-2 gap-2">
-          {[
-            { 標籤: '波動率指數', 值: 'VIX 15.2', 顏色: 'text-emerald-500', 狀態: 'low' },
-            { 標籤: '看漲比例', 值: '68.5%', 顏色: 'text-emerald-500', 狀態: 'high' },
-            { 標籤: '融資餘額', 值: '+2.3%', 顏色: 'text-cyan-500', 狀態: 'up' },
-            { 標籤: '期權PC比', 值: '0.85', 顏色: 'text-amber-500', 狀態: 'neutral' },
-          ].map((item) => (
-            <div key={item.標籤} className="flex items-center justify-between rounded-lg bg-muted/30 p-2">
-              <span className="text-[10px] text-muted-foreground">{item.標籤}</span>
-              <span className={cn('text-xs font-semibold', item.顏色)}>{item.值}</span>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
-
-/** 即時資訊速報卡片 */
-function LiveNewsCard() {
-  const newsItems = [
-    { time: '10:32', title: '聯準會會議紀要釋放鴿派信號', type: 'positive', icon: Globe },
-    { time: '09:45', title: '蘋果新品發布會將於下週舉行', type: 'neutral', icon: Flame },
-    { time: '09:12', title: '科技股盤前普遍上漲', type: 'positive', icon: TrendingUp },
-    { time: '08:30', title: '非農就業數據好於預期', type: 'positive', icon: BarChart3 },
-  ]
-  
-  return (
-    <Card className="glass-card border-border/30">
-      <CardHeader className="pb-2">
-        <CardTitle className="flex items-center justify-between text-sm">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500/20 to-blue-500/20">
-              <Radio className="h-4 w-4 text-violet-500" />
-            </div>
-            <span>即時資訊速報</span>
-          </div>
-          <div className="flex items-center gap-1 text-[10px] text-emerald-500">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            即時更新
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        {newsItems.map((item, idx) => {
-          const Icon = item.icon
-          return (
-            <div key={idx} className="flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-muted/30">
-              <div className={cn(
-                'flex h-7 w-7 items-center justify-center rounded-lg',
-                item.type === 'positive' ? 'bg-emerald-500/15 text-emerald-500' :
-                item.type === 'negative' ? 'bg-rose-500/15 text-rose-500' :
-                'bg-muted text-muted-foreground'
-              )}>
-                <Icon className="h-3.5 w-3.5" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium line-clamp-1">{item.title}</p>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <Clock className="h-3 w-3 text-muted-foreground" />
-                  <span className="text-[10px] text-muted-foreground">{item.time}</span>
-                </div>
-              </div>
-            </div>
-          )
-        })}
-      </CardContent>
-    </Card>
-  )
-}
-
 export function DashboardContent() {
+  const [data, setData] = useState({
+    indices: [] as any[],
+    summary: { marketBreadth: { advancers: 0, decliners: 0, unchanged: 0, ratio: 0 }, bullishSignals: 0, bearishSignals: 0, falseBreakoutAlerts: 0 },
+    sectorHeatmap: [] as any[],
+    signalFeed: [] as any[],
+    falseBreakoutRisks: [] as any[],
+  })
+  const [loading, setLoading] = useState(true)
+  const [fallback, setFallback] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    const load = () => {
+      setLoading(true)
+      getMarketOverview()
+        .then((res) => {
+          if (!cancelled) {
+            setData(res.data)
+            setFallback(res.fallback)
+          }
+        })
+        .catch(() => {
+          if (!cancelled) setFallback(true)
+        })
+        .finally(() => {
+          if (!cancelled) setLoading(false)
+        })
+    }
+    load()
+    const interval = setInterval(load, 5000)
+    return () => { cancelled = true; clearInterval(interval) }
+  }, [])
+
+  const hasRealData = data.indices.length > 0
+
   // 取得主要指數數據
   const spIndex = useMemo(
-    () => marketIndices.find((i) => i.symbol === 'SPX'),
-    []
+    () => data.indices.find((i) => i.symbol === 'SPX'),
+    [data.indices]
   )
 
   return (
     <>
       <AIGCDecorativeBackground />
-      
+
+      {loading && (
+        <div className="flex items-center gap-2 rounded-xl bg-primary/5 border border-primary/20 px-4 py-2 text-sm text-primary">
+          <Activity className="h-4 w-4 animate-spin" />
+          正在載入市場數據...
+        </div>
+      )}
+      {!loading && hasRealData && (
+        <div className="flex items-center gap-2 rounded-xl bg-emerald-500/5 border border-emerald-500/20 px-4 py-2 text-sm text-emerald-600 dark:text-emerald-400">
+          <Radio className="h-4 w-4 animate-pulse" />
+          即時數據模式 — 市場數據已連線
+        </div>
+      )}
+      {!loading && !hasRealData && (
+        <div className="flex items-center gap-2 rounded-xl bg-amber-500/5 border border-amber-500/20 px-4 py-2 text-sm text-amber-600 dark:text-amber-400">
+          <AlertTriangle className="h-4 w-4" />
+          暫無即時數據 — FutuOpenD 未連線
+        </div>
+      )}
+
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -394,93 +325,103 @@ export function DashboardContent() {
           variants={itemVariants}
           className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
         >
-          <QuickActionCard 
-            icon={Brain} 
-            title="AI 即時分析" 
+          <QuickActionCard
+            icon={Brain}
+            title="AI 即時分析"
             description="智能市場解讀"
             accent
             color="emerald"
             badge="HOT"
           />
-          <QuickActionCard 
-            icon={Target} 
-            title="突破掃描" 
+          <QuickActionCard
+            icon={Target}
+            title="突破掃描"
             description="偵測交易機會"
             color="cyan"
           />
-          <QuickActionCard 
-            icon={Layers} 
-            title="量價分析" 
+          <QuickActionCard
+            icon={Layers}
+            title="量價分析"
             description="籌碼結構洞察"
             color="violet"
           />
-          <QuickActionCard 
-            icon={Rocket} 
-            title="策略回測" 
+          <QuickActionCard
+            icon={Rocket}
+            title="策略回測"
             description="驗證交易策略"
             color="amber"
           />
         </motion.div>
 
         {/* 關鍵指標卡片 */}
-        <motion.div
-          variants={itemVariants}
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-        >
-          {marketIndices.map((index, i) => (
-            <MetricCard
-              key={index.symbol}
-              title={index.name}
-              value={index.value}
-              change={index.change}
-              changePercent={index.changePercent}
-              sparklineData={index.sparklineData}
-              status={index.status}
-              badge={index.symbol}
-              icon={index.status === 'bullish' ? TrendingUp : index.status === 'bearish' ? TrendingDown : Activity}
-              index={i}
-            />
-          ))}
-        </motion.div>
+        {hasRealData ? (
+          <motion.div
+            variants={itemVariants}
+            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          >
+            {data.indices.map((index, i) => (
+              <MetricCard
+                key={index.symbol}
+                title={index.name}
+                value={index.value}
+                change={index.change}
+                changePercent={index.changePercent}
+                sparklineData={index.sparklineData}
+                status={index.status}
+                badge={index.symbol}
+                icon={index.status === 'bullish' ? TrendingUp : index.status === 'bearish' ? TrendingDown : Activity}
+                index={i}
+              />
+            ))}
+          </motion.div>
+        ) : !loading ? (
+          <motion.div variants={itemVariants} className="rounded-xl border border-dashed border-border/50 bg-muted/20 p-8 text-center">
+            <BarChart3 className="h-8 w-8 text-muted-foreground/40 mx-auto mb-3" />
+            <p className="text-sm text-muted-foreground">暫無即時指數數據</p>
+            <p className="text-xs text-muted-foreground/60 mt-1">請檢查網路連線或稍後再試</p>
+          </motion.div>
+        ) : null}
 
         {/* 市場統計卡片 */}
-        <motion.div
-          variants={itemVariants}
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-        >
-          <MetricCard
-            title="市場廣度"
-            value={`${marketSummary.marketBreadth.advancers}/${marketSummary.marketBreadth.decliners}`}
-            badge={`比率 ${marketSummary.marketBreadth.ratio.toFixed(2)}`}
-            icon={Gauge}
-            status={marketSummary.marketBreadth.ratio > 1 ? 'bullish' : 'bearish'}
-            index={4}
-          />
-          <MetricCard
-            title="多頭訊號"
-            value={marketSummary.bullishSignals}
-            icon={TrendingUp}
-            status="bullish"
-            badge="今日"
-            index={5}
-          />
-          <MetricCard
-            title="空頭訊號"
-            value={marketSummary.bearishSignals}
-            icon={TrendingDown}
-            status="bearish"
-            badge="今日"
-            index={6}
-          />
-          <MetricCard
-            title="假突破警示"
-            value={marketSummary.falseBreakoutAlerts}
-            icon={AlertTriangle}
-            status="neutral"
-            badge="需關注"
-            index={7}
-          />
-        </motion.div>
+        {hasRealData && (
+          <motion.div
+            variants={itemVariants}
+            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          >
+            <MetricCard
+              title="市場廣度"
+              value={`${data.summary.marketBreadth.advancers}/${data.summary.marketBreadth.decliners}`}
+              badge={`比率 ${data.summary.marketBreadth.ratio.toFixed(2)}`}
+              icon={Gauge}
+              status={data.summary.marketBreadth.ratio > 1 ? 'bullish' : 'bearish'}
+              index={4}
+            />
+            <MetricCard
+              title="多頭訊號"
+              value={data.summary.bullishSignals}
+              icon={TrendingUp}
+              status="bullish"
+              badge="今日"
+              index={5}
+            />
+            <MetricCard
+              title="空頭訊號"
+              value={data.summary.bearishSignals}
+              icon={TrendingDown}
+              status="bearish"
+              badge="今日"
+              index={6}
+            />
+            <MetricCard
+              title="假突破警示"
+              value={data.summary.falseBreakoutAlerts}
+              icon={AlertTriangle}
+              status="neutral"
+              badge="需關注"
+              index={7}
+            />
+          </motion.div>
+        )}
 
         {/* 主要內容區 */}
         <div className="grid gap-6 lg:grid-cols-3">
@@ -498,32 +439,27 @@ export function DashboardContent() {
             )}
 
             {/* 產業熱力圖 */}
-            <SectorHeatmap data={sectorHeatmapData} />
+            {data.sectorHeatmap.length > 0 && (
+              <SectorHeatmap data={data.sectorHeatmap} />
+            )}
           </motion.div>
 
           {/* 右側：訊號動態與風險監控 */}
           <motion.div variants={itemVariants} className="space-y-6">
-            {/* 市場情緒卡片 */}
-            <MarketSentimentCard />
-            
-            {/* 即時資訊速報 */}
-            <LiveNewsCard />
-
             {/* 訊號動態 */}
-            <SignalFeed data={signalFeed} />
+            {data.signalFeed.length > 0 && (
+              <SignalFeed data={data.signalFeed} />
+            )}
 
             {/* 假突破風險表 */}
-            <FalseBreakoutTable data={falseBreakoutRisks} />
+            {data.falseBreakoutRisks.length > 0 && (
+              <FalseBreakoutTable data={data.falseBreakoutRisks} />
+            )}
           </motion.div>
         </div>
 
-        {/* AI 市場簡報 */}
-        <motion.div variants={itemVariants}>
-          <AIInsightCard analysis={aiAnalysis} compact />
-        </motion.div>
-
         {/* 底部裝飾 */}
-        <motion.div 
+        <motion.div
           variants={itemVariants}
           className="flex items-center justify-center gap-4 py-6 text-muted-foreground/20"
         >

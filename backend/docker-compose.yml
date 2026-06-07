@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+  # PostgreSQL (using standard postgres image for ARM64 compatibility on Jetson AGX)
+  # Note: TimescaleDB official image may not have ARM64 builds for Jetson.
+  # For TimescaleDB on ARM64/Jetson, build from source or use a community image.
+  postgres:
+    image: postgres:16
+    container_name: mi_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: market_user
+      POSTGRES_PASSWORD: market_password
+      POSTGRES_DB: market_intelligence
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U market_user -d market_intelligence"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: mi_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: mi_qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Ollama is NOT included here because Jetson AGX requires GPU-specific builds.
+  # Install Ollama manually on the host or use a Jetson-compatible container.
+  # See README.md for Jetson Ollama setup notes.
+
+volumes:
+  postgres_data:
+  redis_data:
+  qdrant_data:

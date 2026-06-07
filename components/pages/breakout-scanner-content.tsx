@@ -5,7 +5,7 @@
  * 顯示即時突破訊號、掃描結果和篩選功能
  */
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -43,6 +43,8 @@ import {
   Clock,
 } from "lucide-react"
 import { RiskBadge } from "@/components/dashboard/risk-badge"
+import { getBreakoutScanner } from "@/lib/api"
+import type { BreakoutScanResult } from "@/types"
 
 /** 突破類型定義 */
 type 突破類型 = "價格突破" | "型態突破" | "成交量突破" | "指標突破"
@@ -65,136 +67,35 @@ interface 突破訊號 {
   描述: string
 }
 
-/** 模擬突破訊號數據 */
-const 模擬突破訊號: 突破訊號[] = [
-  {
-    id: "1",
-    股票代號: "2330",
-    股票名稱: "台積電",
-    類型: "價格突破",
-    方向: "向上",
-    突破價位: 890,
-    現價: 898,
-    漲跌幅: 2.35,
-    成交量比: 1.85,
-    信心度: 88,
-    假突破風險: "低",
-    時間: "09:15",
-    描述: "突破前高壓力位 890 元，量能配合良好",
-  },
-  {
-    id: "2",
-    股票代號: "2454",
-    股票名稱: "聯發科",
-    類型: "型態突破",
-    方向: "向上",
-    突破價位: 1280,
-    現價: 1295,
-    漲跌幅: 1.17,
-    成交量比: 1.42,
-    信心度: 75,
-    假突破風險: "中",
-    時間: "10:32",
-    描述: "突破頭肩底頸線位，目標價 1350",
-  },
-  {
-    id: "3",
-    股票代號: "2317",
-    股票名稱: "鴻海",
-    類型: "成交量突破",
-    方向: "向上",
-    突破價位: 175,
-    現價: 178.5,
-    漲跌幅: 2.0,
-    成交量比: 2.35,
-    信心度: 82,
-    假突破風險: "低",
-    時間: "11:05",
-    描述: "成交量突破 20 日均量 2 倍以上",
-  },
-  {
-    id: "4",
-    股票代號: "2382",
-    股票名稱: "廣達",
-    類型: "指標突破",
-    方向: "向上",
-    突破價位: 310,
-    現價: 318,
-    漲跌幅: 2.58,
-    成交量比: 1.65,
-    信心度: 72,
-    假突破風險: "中",
-    時間: "13:22",
-    描述: "MACD 金叉突破，RSI 進入強勢區",
-  },
-  {
-    id: "5",
-    股票代號: "3008",
-    股票名稱: "大立光",
-    類型: "價格突破",
-    方向: "向下",
-    突破價位: 2180,
-    現價: 2150,
-    漲跌幅: -1.38,
-    成交量比: 1.28,
-    信心度: 68,
-    假突破風險: "中",
-    時間: "14:05",
-    描述: "跌破前低支撐位 2180 元",
-  },
-  {
-    id: "6",
-    股票代號: "2303",
-    股票名稱: "聯電",
-    類型: "型態突破",
-    方向: "向上",
-    突破價位: 52,
-    現價: 53.5,
-    漲跌幅: 2.88,
-    成交量比: 1.92,
-    信心度: 85,
-    假突破風險: "低",
-    時間: "09:48",
-    描述: "突破三角收斂上緣，打開上漲空間",
-  },
-  {
-    id: "7",
-    股票代號: "2412",
-    股票名稱: "中華電",
-    類型: "價格突破",
-    方向: "向上",
-    突破價位: 128,
-    現價: 129.5,
-    漲跌幅: 1.17,
-    成交量比: 1.15,
-    信心度: 62,
-    假突破風險: "高",
-    時間: "10:15",
-    描述: "突破盤整區上緣，但量能不足",
-  },
-  {
-    id: "8",
-    股票代號: "2881",
-    股票名稱: "富邦金",
-    類型: "成交量突破",
-    方向: "向上",
-    突破價位: 78,
-    現價: 79.8,
-    漲跌幅: 2.31,
-    成交量比: 2.85,
-    信心度: 90,
-    假突破風險: "低",
-    時間: "09:32",
-    描述: "爆量突破，外資大單進場",
-  },
-]
 
-/** 掃描統計資料 */
-const 掃描統計 = {
-  總掃描數: 1847,
-  突破訊號數: 45,
-  高信心度數: 18,
-  最後更新: "14:32:15",
+/** 將後端突破掃描結果映射為本地格式 */
+function mapBreakoutResults(results: BreakoutScanResult[]): 突破訊號[] {
+  return results.map((r) => {
+    const direction = r.signal === "sell" || r.signal === "short" ? "向下" : "向上"
+    const type: 突破類型 =
+      r.macdState === "bullish" && r.rsiState === "overbought"
+        ? "指標突破"
+        : r.volumeRatio > 1.5
+          ? "成交量突破"
+          : "價格突破"
+    const risk: "低" | "中" | "高" =
+      r.falseBreakoutRisk < 33 ? "低" : r.falseBreakoutRisk < 66 ? "中" : "高"
+    return {
+      id: r.id,
+      股票代號: r.ticker,
+      股票名稱: r.name,
+      類型: type,
+      方向: direction as 突破方向,
+      突破價位: r.breakoutLevel,
+      現價: r.price,
+      漲跌幅: 0,
+      成交量比: r.volumeRatio,
+      信心度: Math.round(r.closeStrength),
+      假突破風險: risk,
+      時間: "09:15",
+      描述: `${r.sector} 類股突破分析，${r.obvConfirmation ? "OBV確認" : "OBV未確認"}，籌碼壓力 ${Math.round(r.chipPressure)}%`,
+    }
+  })
 }
 
 export function BreakoutScannerContent() {
@@ -204,8 +105,47 @@ export function BreakoutScannerContent() {
   const [最低信心度, set最低信心度] = useState<string>("50")
   const [是否自動更新, set是否自動更新] = useState(true)
 
+  // API 數據狀態
+  const [突破訊號列表, set突破訊號列表] = useState<突破訊號[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [最後更新, set最後更新] = useState<string>("--:--:--")
+
+  // 從 API 載入數據
+  useEffect(() => {
+    let cancelled = false
+    const load = () => {
+      setLoading(true)
+      setError(null)
+      getBreakoutScanner()
+        .then((res) => {
+          if (!cancelled) {
+            if (res.length > 0) {
+              set突破訊號列表(mapBreakoutResults(res))
+            } else {
+              set突破訊號列表([])
+            }
+            set最後更新(new Date().toLocaleTimeString("zh-TW"))
+          }
+        })
+        .catch((err) => {
+          if (!cancelled) {
+            setError(err instanceof Error ? err.message : "載入失敗")
+          }
+        })
+        .finally(() => {
+          if (!cancelled) setLoading(false)
+        })
+    }
+    load()
+    const interval = setInterval(() => {
+      if (是否自動更新) load()
+    }, 5000)
+    return () => { cancelled = true; clearInterval(interval) }
+  }, [是否自動更新])
+
   // 篩選後的訊號
-  const 篩選後訊號 = 模擬突破訊號.filter((訊號) => {
+  const 篩選後訊號 = 突破訊號列表.filter((訊號) => {
     if (選擇類型 !== "全部" && 訊號.類型 !== 選擇類型) return false
     if (選擇方向 !== "全部" && 訊號.方向 !== 選擇方向) return false
     if (訊號.信心度 < parseInt(最低信心度)) return false
@@ -221,7 +161,7 @@ export function BreakoutScannerContent() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">總掃描股票</p>
-                <p className="text-2xl font-bold">{掃描統計.總掃描數}</p>
+                <p className="text-2xl font-bold">{突破訊號列表.length}</p>
               </div>
               <div className="rounded-full bg-primary/10 p-3">
                 <Activity className="h-5 w-5 text-primary" />
@@ -236,7 +176,7 @@ export function BreakoutScannerContent() {
               <div>
                 <p className="text-sm text-muted-foreground">突破訊號</p>
                 <p className="text-2xl font-bold text-emerald-500">
-                  {掃描統計.突破訊號數}
+                  {突破訊號列表.filter((s) => s.方向 === "向上").length}
                 </p>
               </div>
               <div className="rounded-full bg-emerald-500/10 p-3">
@@ -252,7 +192,7 @@ export function BreakoutScannerContent() {
               <div>
                 <p className="text-sm text-muted-foreground">高信心度</p>
                 <p className="text-2xl font-bold text-amber-500">
-                  {掃描統計.高信心度數}
+                  {突破訊號列表.filter((s) => s.信心度 >= 70).length}
                 </p>
               </div>
               <div className="rounded-full bg-amber-500/10 p-3">
@@ -267,7 +207,7 @@ export function BreakoutScannerContent() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">最後更新</p>
-                <p className="text-2xl font-bold">{掃描統計.最後更新}</p>
+                <p className="text-2xl font-bold">{最後更新}</p>
               </div>
               <div className="rounded-full bg-cyan-500/10 p-3">
                 <Clock className="h-5 w-5 text-cyan-500" />
@@ -276,6 +216,20 @@ export function BreakoutScannerContent() {
           </CardContent>
         </Card>
       </div>
+
+      {/* 載入/錯誤提示 */}
+      {loading && (
+        <div className="flex items-center gap-2 rounded-xl bg-primary/5 border border-primary/20 px-4 py-2 text-sm text-primary">
+          <Activity className="h-4 w-4 animate-spin" />
+          正在載入突破掃描數據...
+        </div>
+      )}
+      {error && (
+        <div className="flex items-center gap-2 rounded-xl bg-amber-500/5 border border-amber-500/20 px-4 py-2 text-sm text-amber-600 dark:text-amber-400">
+          <AlertTriangle className="h-4 w-4" />
+          API 連線失敗（{error}）
+        </div>
+      )}
 
       {/* 篩選條件 */}
       <Card className="glass-card border-border/50">
@@ -463,7 +417,7 @@ export function BreakoutScannerContent() {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <RiskBadge level={訊號.假突破風險} />
+                        <RiskBadge risk={訊號.假突破風險 === "低" ? 25 : 訊號.假突破風險 === "中" ? 50 : 75} />
                       </TableCell>
                       <TableCell className="max-w-xs truncate text-sm text-muted-foreground">
                         {訊號.描述}
@@ -567,7 +521,7 @@ export function BreakoutScannerContent() {
                         量比 {訊號.成交量比.toFixed(2)}x
                       </span>
                     </div>
-                    <RiskBadge level={訊號.假突破風險} />
+                    <RiskBadge risk={訊號.假突破風險 === "低" ? 25 : 訊號.假突破風險 === "中" ? 50 : 75} />
                   </div>
 
                   <p className="mt-3 text-sm text-muted-foreground">

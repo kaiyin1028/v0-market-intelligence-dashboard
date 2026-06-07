@@ -351,7 +351,6 @@
   /* 神經網路裝飾背景 - 更精緻 */
   .neural-pattern {
     position: relative;
-    overflow: hidden;
   }
   
   .neural-pattern::before {

@@ -64,6 +64,8 @@ import {
   TradeDistributionHistogram 
 } from "@/components/charts/backtest-charts"
 import { cn } from "@/lib/utils"
+import { runBacktest } from "@/lib/api"
+import type { BacktestResult, StrategyType } from "@/types"
 
 /** 生成權益曲線數據 */
 const generateEquityCurve = (months: number = 24) => {
@@ -178,23 +180,135 @@ export function BacktestContent() {
   // 策略參數
   const [是否執行回測, set是否執行回測] = useState(false)
   const [正在執行, set正在執行] = useState(false)
+  const [回測標的, set回測標的] = useState("AAPL")
+  const [回測期間, set回測期間] = useState("1y")
+  const [初始資金, set初始資金] = useState("100000")
+  const [技術指標, set技術指標] = useState("macd-rsi")
   const [RSI上限, setRSI上限] = useState([70])
   const [RSI下限, setRSI下限] = useState([30])
   const [停損比例, set停損比例] = useState([5])
   const [停利比例, set停利比例] = useState([15])
+  const [apiError, setApiError] = useState<string | null>(null)
+  const [apiResult, setApiResult] = useState<BacktestResult | null>(null)
 
-  // 生成圖表數據
-  const equityCurveData = useMemo(() => generateEquityCurve(18), [])
-  const drawdownData = useMemo(() => generateDrawdownData(18), [])
-  const monthlyReturns = useMemo(() => generateMonthlyReturns(), [])
+  // 績效指標（優先使用 API 結果）
+  const 績效指標 = useMemo(() => {
+    if (apiResult) {
+      return {
+        總報酬率: apiResult.totalReturn,
+        年化報酬: apiResult.annualizedReturn,
+        夏普比率: apiResult.sharpeRatio,
+        索提諾比率: apiResult.sortinoRatio,
+        卡瑪比率: apiResult.calmarRatio,
+        最大回撤: apiResult.maxDrawdown,
+        勝率: apiResult.winRate,
+        盈虧比: apiResult.profitFactor,
+        交易次數: apiResult.numberOfTrades,
+        平均持倉: apiResult.avgHoldingPeriod,
+        獲利因子: apiResult.profitFactor,
+        期望值: apiResult.totalReturn / (apiResult.numberOfTrades || 1),
+      }
+    }
+    return {
+      總報酬率: 78.5,
+      年化報酬: 45.2,
+      夏普比率: 1.85,
+      索提諾比率: 2.42,
+      卡瑪比率: 2.15,
+      最大回撤: -12.5,
+      勝率: 68.5,
+      盈虧比: 2.35,
+      交易次數: 156,
+      平均持倉: 8.5,
+      獲利因子: 2.18,
+      期望值: 1.85,
+    }
+  }, [apiResult])
 
-  // 模擬執行回測
-  const handleRunBacktest = () => {
+  // 生成圖表數據（優先使用 API 結果）
+  const equityCurveData = useMemo(() => {
+    if (apiResult?.equityCurve) {
+      return apiResult.equityCurve.map((item, idx) => {
+        const benchmark = 100 * (1 + (idx * 0.005) + Math.random() * 0.02)
+        return {
+          date: item.date,
+          strategy: Number(item.value.toFixed(2)),
+          benchmark: Number(benchmark.toFixed(2)),
+        }
+      })
+    }
+    return generateEquityCurve(18)
+  }, [apiResult])
+
+  const drawdownData = useMemo(() => {
+    if (apiResult?.drawdownCurve) {
+      return apiResult.drawdownCurve.map((item) => ({
+        date: item.date,
+        drawdown: Number(item.value.toFixed(2)),
+      }))
+    }
+    return generateDrawdownData(18)
+  }, [apiResult])
+
+  const monthlyReturns = useMemo(() => {
+    if (apiResult?.monthlyReturns) {
+      return apiResult.monthlyReturns.map((item) => {
+        const [yearStr, monthStr] = item.month.split("-")
+        const year = parseInt(yearStr)
+        const month = parseInt(monthStr)
+        const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+        return {
+          year,
+          month,
+          monthName: monthNames[month - 1] || `${month}月`,
+          return: Number(item.return.toFixed(1)),
+        }
+      })
+    }
+    return generateMonthlyReturns()
+  }, [apiResult])
+
+  // 執行回測
+  const handleRunBacktest = async () => {
     set正在執行(true)
-    setTimeout(() => {
-      set正在執行(false)
+    setApiError(null)
+    try {
+      const strategyMap: Record<string, StrategyType> = {
+        "macd-rsi": "multi-factor",
+        macd: "macd-trend",
+        rsi: "rsi-reversal",
+        bollinger: "vwap-pullback",
+        custom: "multi-factor",
+      }
+      const monthsMap: Record<string, number> = { "3m": 3, "6m": 6, "1y": 12, "3y": 36, "5y": 60 }
+      const months = monthsMap[回測期間] || 12
+      const endDate = new Date()
+      const startDate = new Date(endDate.getFullYear(), endDate.getMonth() - months, endDate.getDate())
+
+      const params = {
+        strategy: strategyMap[技術指標] || "multi-factor",
+        tickers: 回測標的 === "portfolio" ? ["AAPL", "MSFT", "NVDA"] : [回測標的],
+        startDate,
+        endDate,
+        initialCapital: parseInt(初始資金) || 100000,
+        parameters: {
+          rsiUpper: RSI上限[0],
+          rsiLower: RSI下限[0],
+          stopLoss: 停損比例[0],
+          takeProfit: 停利比例[0],
+        },
+      }
+
+      const result = await runBacktest(params)
+      setApiResult(result)
       set是否執行回測(true)
-    }, 2000)
+    } catch (err) {
+      setApiError(err instanceof Error ? err.message : "回測執行失敗")
+      // 仍顯示本地模擬結果
+      set是否執行回測(true)
+    } finally {
+      set正在執行(false)
+    }
   }
 
   return (
@@ -243,7 +357,7 @@ export function BacktestContent() {
               <div className="space-y-3">
                 <div className="space-y-1.5">
                   <Label className="text-xs">回測標的</Label>
-                  <Select defaultValue="AAPL">
+                  <Select value={回測標的} onValueChange={set回測標的}>
                     <SelectTrigger className="bg-background/50">
                       <SelectValue />
                     </SelectTrigger>
@@ -257,7 +371,7 @@ export function BacktestContent() {
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs">回測期間</Label>
-                  <Select defaultValue="1y">
+                  <Select value={回測期間} onValueChange={set回測期間}>
                     <SelectTrigger className="bg-background/50">
                       <SelectValue />
                     </SelectTrigger>
@@ -272,9 +386,10 @@ export function BacktestContent() {
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs">初始資金</Label>
-                  <Input 
-                    type="number" 
-                    defaultValue="100000" 
+                  <Input
+                    type="number"
+                    value={初始資金}
+                    onChange={(e) => set初始資金(e.target.value)}
                     className="bg-background/50 font-mono"
                   />
                 </div>
@@ -290,7 +405,7 @@ export function BacktestContent() {
               <div className="space-y-3">
                 <div className="space-y-1.5">
                   <Label className="text-xs">技術指標</Label>
-                  <Select defaultValue="macd-rsi">
+                  <Select value={技術指標} onValueChange={set技術指標}>
                     <SelectTrigger className="bg-background/50">
                       <SelectValue />
                     </SelectTrigger>
@@ -446,6 +561,13 @@ export function BacktestContent() {
               </Button>
             </div>
           </div>
+
+          {apiError && (
+            <div className="mt-4 flex items-center gap-2 rounded-xl bg-amber-500/5 border border-amber-500/20 px-4 py-2 text-sm text-amber-600 dark:text-amber-400">
+              <AlertTriangle className="h-4 w-4" />
+              API 回測失敗，已顯示模擬數據（{apiError}）
+            </div>
+          )}
         </CardContent>
       </Card>
 

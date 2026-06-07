@@ -45,6 +45,17 @@ const 模擬指標數據: TechnicalIndicators = {
   atr: 15.8,
   obv: 2500000000,
   cmf: 0.12,
+  bollingerBands: {
+    upper: 195.0,
+    middle: 188.5,
+    lower: 182.0,
+  },
+  movingAverages: {
+    ma20: 187.5,
+    ma60: 183.2,
+    ma200: 175.0,
+  },
+  vwap: 188.92,
 }
 
 /** 指標卡片容器 */
@@ -255,8 +266,8 @@ export function IndicatorCards({ 股票代號, indicators = 模擬指標數據 }
           <div className="p-3 rounded-lg bg-muted/20">
             <div className="flex items-end justify-center gap-0.5 h-10">
               {Array.from({ length: 12 }).map((_, i) => {
-                const isPositive = i >= 6 ? Math.random() > 0.3 : Math.random() > 0.6
-                const height = 20 + Math.random() * 80
+                const isPositive = i >= 6 ? i % 3 !== 0 : i % 2 === 0
+                const height = 20 + ((i * 17) % 80)
                 return (
                   <div
                     key={i}

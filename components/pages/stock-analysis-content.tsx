@@ -8,7 +8,7 @@
  * 使用專業級圖表元件展示完整的技術分析資訊
  */
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -53,16 +53,17 @@ import { SignalPanel } from "@/components/charts/signal-panel"
 import { ScoreGauge } from "@/components/dashboard/score-gauge"
 import { SignalBadge, AISignalBadge } from "@/components/dashboard/signal-badge"
 import { RiskBadge, DetailedRiskIndicator } from "@/components/dashboard/risk-badge"
-import { generateCandlestickData, chartMarkers, volumeProfileData, chipDistribution } from "@/lib/mock-data"
+import { getStockAnalysis, getStockOverview, searchStocks } from "@/lib/api"
 import { cn } from "@/lib/utils"
+import type { Stock, CandlestickData, TechnicalIndicators, VolumeProfile, ChipDistribution, BreakoutAnalysis, SignalData } from "@/types"
 
 /** 熱門股票列表 */
 const 熱門股票 = [
-  { 代號: "AAPL", 名稱: "蘋果", 價格: 189.84, 漲跌: 2.35, 英文: "Apple Inc." },
-  { 代號: "NVDA", 名稱: "輝達", 價格: 878.35, 漲跌: 3.28, 英文: "NVIDIA Corp." },
-  { 代號: "MSFT", 名稱: "微軟", 價格: 425.22, 漲跌: 1.15, 英文: "Microsoft Corp." },
-  { 代號: "AMD", 名稱: "超微", 價格: 180.25, 漲跌: -0.85, 英文: "Advanced Micro Devices" },
-  { 代號: "META", 名稱: "Meta", 價格: 505.40, 漲跌: 1.92, 英文: "Meta Platforms" },
+  { 代號: "AAPL", 名稱: "蘋果", 英文: "Apple Inc." },
+  { 代號: "NVDA", 名稱: "輝達", 英文: "NVIDIA Corp." },
+  { 代號: "MSFT", 名稱: "微軟", 英文: "Microsoft Corp." },
+  { 代號: "AMD", 名稱: "超微", 英文: "Advanced Micro Devices" },
+  { 代號: "META", 名稱: "Meta", 英文: "Meta Platforms" },
 ]
 
 /** AI 分析結果介面 */
@@ -76,20 +77,34 @@ interface AIAnalysisResult {
 
 export function StockAnalysisContent() {
   // 當前選擇的股票
-  const [當前股票, set當前股票] = useState({
-    代號: "AAPL",
-    名稱: "蘋果",
-    英文: "Apple Inc.",
-    價格: 189.84,
-    漲跌: 2.35,
-    開盤: 187.50,
-    最高: 191.25,
-    最低: 186.80,
-    成交量: "52.3M",
-    市值: "$2.95T",
-    產業: "科技-消費電子",
-    本益比: 28.5,
-    股息率: 0.52,
+  const [當前股票, set當前股票] = useState<{
+    代號: string
+    名稱: string
+    英文: string
+    價格: number
+    漲跌: number
+    開盤: number
+    最高: number
+    最低: number
+    成交量: string
+    市值: string
+    產業: string
+    本益比: number
+    股息率: number
+  }>({
+    代號: 'AAPL',
+    名稱: '蘋果',
+    英文: 'Apple Inc.',
+    價格: 0,
+    漲跌: 0,
+    開盤: 0,
+    最高: 0,
+    最低: 0,
+    成交量: '-',
+    市值: '-',
+    產業: '科技',
+    本益比: 0,
+    股息率: 0,
   })
 
   // 搜尋關鍵字
@@ -101,27 +116,230 @@ export function StockAnalysisContent() {
   // 是否收藏
   const [已收藏, set已收藏] = useState(false)
 
-  // 生成模擬K線數據
-  const candlestickData = useMemo(() => generateCandlestickData(90), [])
+  // API 數據狀態
+  const [apiData, setApiData] = useState<{
+    stock: Stock
+    candlestickData: CandlestickData[]
+    indicators: TechnicalIndicators | null
+    volumeProfile: VolumeProfile[]
+    chipDistribution: ChipDistribution
+    breakoutAnalysis: BreakoutAnalysis
+    signalData: SignalData
+    aiAnalysis: {
+      summary: string
+      trendView: 'bullish' | 'bearish' | 'neutral'
+      bullishReasons: string[]
+      bearishRisks: string[]
+      keyLevels: {
+        support: number[]
+        resistance: number[]
+      }
+      confidence: number
+    } | null
+  } | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [lastUpdated, setLastUpdated] = useState<string>("")
 
-  // 模擬支撐阻力位
-  const supportLevels = useMemo(() => [186.50, 183.20], [])
-  const resistanceLevels = useMemo(() => [192.50, 195.00], [])
-
-  // 模擬突破標註
-  const breakoutAnnotations = useMemo(() => [
-    { date: candlestickData[candlestickData.length - 15]?.date || '', type: 'true-breakout' as const, price: 188.50, label: '突破盤整區間' },
-    { date: candlestickData[candlestickData.length - 35]?.date || '', type: 'false-breakout' as const, price: 185.00, label: '假突破回落' },
-  ], [candlestickData])
-
-  // AI 分析結果
-  const aiAnalysis: AIAnalysisResult = {
-    技術面: `${當前股票.代號} 目前呈現穩健的多頭格局。短中長期均線多頭排列，MA20 上穿 MA60 形成黃金交叉。MACD 柱狀圖持續擴張，動能增強。布林帶開口擴大，價格沿上軌運行，顯示強勁的上升趨勢。RSI 維持在 58-65 區間，尚未進入超買區域，仍有上漲空間。成交量配合良好，量價齊揚。`,
-    籌碼面: `籌碼結構健康。當前價格位於 POC (成本密集區) 上方，大部分持有者處於獲利狀態。上方套牢籌碼比例僅 22.5%，突破阻力相對容易。下方支撐密度達 67.8%，提供堅實的價格支撐。主力資金持續流入，近五日累計淨流入 $1.2B。OBV 指標創近期新高，確認上漲有效性。`,
-    操作建議: `綜合技術面與籌碼面分析，建議採取偏多操作策略。可於回檔至 $${supportLevels[0].toFixed(2)}-$${(supportLevels[0] + 2).toFixed(2)} 區間分批布局，或等待突破 $${resistanceLevels[0].toFixed(2)} 後追進。停損設於 $${(supportLevels[1] - 2).toFixed(2)} 以下，目標價看至 $${resistanceLevels[1].toFixed(2)}、$200.00。風險報酬比約 1:2.8，屬於適合進場的交易機會。`,
-    風險提示: `1. RSI 接近超買區域，短期可能出現技術性回檔\n2. 大盤若轉弱可能拖累個股表現\n3. 需關注財報公布前後的波動風險\n4. 若跌破 $${supportLevels[1].toFixed(2)} 支撐，需重新評估多頭看法`,
-    信心度: 78,
+  // 時間週期映射
+  const timeframeMap: Record<string, string> = {
+    '1分': '1m',
+    '5分': '5m',
+    '15分': '15m',
+    '30分': '30m',
+    '60分': '1h',
+    '日K': '1d',
+    '週K': '1w',
+    '月K': '1M',
+    '季K': '3M',
+    '半年': '6M',
+    '年K': '1Y',
   }
+
+  // 從 URL 參數讀取 ticker（支援從頂部搜尋列導航）
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    const tickerFromUrl = params.get('ticker')
+    if (tickerFromUrl) {
+      set搜尋關鍵字(tickerFromUrl)
+      const timer = setTimeout(() => {
+        handleSearch()
+      }, 0)
+      return () => clearTimeout(timer)
+    }
+  }, [])
+
+  // 載入完整分析數據（僅在股票或週期變更時執行）
+  useEffect(() => {
+    let cancelled = false
+    setLoading(true)
+    setError(null)
+    getStockAnalysis(當前股票.代號, timeframeMap[時間週期] || '1d')
+      .then((res) => {
+        if (!cancelled) {
+          const s = res.stock
+          set當前股票({
+            代號: s.ticker,
+            名稱: s.name,
+            英文: s.name,
+            價格: s.price,
+            漲跌: s.changePercent,
+            開盤: s.price - s.change,
+            最高: s.price * 1.005,
+            最低: s.price * 0.995,
+            成交量: s.volume ? (s.volume / 1e6).toFixed(1) + 'M' : '-',
+            市值: s.marketCap ? '$' + (s.marketCap / 1e12).toFixed(2) + 'T' : '-',
+            產業: s.sector || '科技',
+            本益比: 0,
+            股息率: 0,
+          })
+          setApiData({
+            stock: s,
+            indicators: res.indicators,
+            candlestickData: res.candlestickData,
+            volumeProfile: res.volumeProfile,
+            chipDistribution: res.chipDistribution,
+            breakoutAnalysis: res.breakoutAnalysis,
+            signalData: res.signalData,
+            aiAnalysis: res.aiAnalysis,
+          })
+          setLastUpdated(new Date().toLocaleTimeString('zh-TW'))
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : '載入失敗')
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+    return () => { cancelled = true }
+  }, [當前股票.代號, 時間週期])
+
+  // 輕量價格輪詢（每 5 秒只更新價格，不刷新圖表與指標）
+  useEffect(() => {
+    let cancelled = false
+    const pollPrice = () => {
+      getStockOverview(當前股票.代號)
+        .then((s) => {
+          if (!cancelled) {
+            set當前股票((prev) => ({
+              ...prev,
+              價格: s.price,
+              漲跌: s.changePercent,
+              開盤: s.price - s.change,
+              最高: s.price * 1.005,
+              最低: s.price * 0.995,
+              成交量: s.volume ? (s.volume / 1e6).toFixed(1) + 'M' : '-',
+              市值: s.marketCap ? '$' + (s.marketCap / 1e12).toFixed(2) + 'T' : '-',
+              產業: s.sector || prev.產業,
+            }))
+            setLastUpdated(new Date().toLocaleTimeString('zh-TW'))
+          }
+        })
+        .catch(() => {
+          // 輕量輪詢失敗不顯示錯誤，避免干擾使用者
+        })
+    }
+    const interval = setInterval(pollPrice, 5000)
+    return () => { cancelled = true; clearInterval(interval) }
+  }, [當前股票.代號])
+
+  // K線數據（僅使用 API）
+  const candlestickData = useMemo(
+    () => apiData?.candlestickData || [],
+    [apiData]
+  )
+
+  // 支撐阻力位（僅使用 API）
+  const supportLevels = useMemo(
+    () => apiData?.aiAnalysis?.keyLevels?.support || [],
+    [apiData]
+  )
+  const resistanceLevels = useMemo(
+    () => apiData?.aiAnalysis?.keyLevels?.resistance || [],
+    [apiData]
+  )
+
+  // 真實 VWAP
+  const vwapValue = useMemo(
+    () => apiData?.indicators?.vwap,
+    [apiData]
+  )
+
+  // 從訊號資料生成買賣標記
+  const chartMarkers = useMemo(() => {
+    const markers: import('@/types').ChartMarker[] = []
+    const sig = apiData?.signalData
+    const lastCandle = candlestickData[candlestickData.length - 1]
+    if (!sig || !lastCandle) return markers
+    const lastDate = lastCandle.date
+    if (sig.buyScore > sig.sellScore && sig.entryZone) {
+      markers.push({
+        date: lastDate,
+        type: 'buy',
+        price: sig.entryZone.low,
+        label: `買入 ${sig.buyScore}分`,
+      })
+    }
+    if (sig.sellScore > sig.buyScore) {
+      markers.push({
+        date: lastDate,
+        type: 'sell',
+        price: sig.stopLoss || lastCandle.close * 0.95,
+        label: `賣出 ${sig.sellScore}分`,
+      })
+    }
+    return markers
+  }, [apiData, candlestickData])
+
+  // 突破標註（從突破分析資料生成）
+  const breakoutAnnotations = useMemo(() => {
+    const bo = apiData?.breakoutAnalysis
+    const lastCandle = candlestickData[candlestickData.length - 1]
+    if (!bo || !lastCandle) return []
+    const annotations: { date: string; type: 'true-breakout' | 'false-breakout'; price: number; label: string }[] = []
+    if (bo.trueBreakoutScore >= 65) {
+      annotations.push({
+        date: lastCandle.date,
+        type: 'true-breakout',
+        price: bo.breakoutLevel || lastCandle.high,
+        label: `真突破 ${bo.trueBreakoutScore}分`,
+      })
+    }
+    if (bo.falseBreakoutRisk >= 50) {
+      annotations.push({
+        date: lastCandle.date,
+        type: 'false-breakout',
+        price: lastCandle.high,
+        label: `假突破風險 ${bo.falseBreakoutRisk}%`,
+      })
+    }
+    return annotations
+  }, [apiData, candlestickData])
+
+  // AI 分析結果（僅使用 API）
+  const aiAnalysis: AIAnalysisResult = useMemo(() => {
+    if (apiData?.aiAnalysis) {
+      const a = apiData.aiAnalysis
+      return {
+        技術面: a.summary,
+        籌碼面: a.bullishReasons.join('；'),
+        操作建議: `綜合技術面與籌碼面分析，建議採取${a.trendView === 'bullish' ? '偏多' : a.trendView === 'bearish' ? '偏空' : '觀望'}操作策略。`,
+        風險提示: a.bearishRisks.join('\n'),
+        信心度: Math.round(a.confidence),
+      }
+    }
+    return {
+      技術面: '暫無分析數據',
+      籌碼面: '暫無分析數據',
+      操作建議: '暫無分析數據',
+      風險提示: '暫無分析數據',
+      信心度: 0,
+    }
+  }, [apiData])
 
   // 處理股票切換
   const handleStockChange = (股票: typeof 熱門股票[0]) => {
@@ -129,19 +347,62 @@ export function StockAnalysisContent() {
       代號: 股票.代號,
       名稱: 股票.名稱,
       英文: 股票.英文,
-      價格: 股票.價格,
-      漲跌: 股票.漲跌,
-      開盤: 股票.價格 * (0.995 + Math.random() * 0.01),
-      最高: 股票.價格 * (1.005 + Math.random() * 0.01),
-      最低: 股票.價格 * (0.985 + Math.random() * 0.01),
-      成交量: (Math.random() * 50 + 20).toFixed(1) + "M",
-      市值: `$${(Math.random() * 2 + 0.5).toFixed(2)}T`,
-      產業: "科技",
-      本益比: Math.random() * 20 + 20,
-      股息率: Math.random() * 2,
+      價格: 0,
+      漲跌: 0,
+      開盤: 0,
+      最高: 0,
+      最低: 0,
+      成交量: '-',
+      市值: '-',
+      產業: '科技',
+      本益比: 0,
+      股息率: 0,
     })
+    setApiData(null)
     set已收藏(false)
   }
+
+  // 搜尋並切換到指定股票
+  const handleSearch = useCallback(async () => {
+    const query = 搜尋關鍵字.trim().toUpperCase()
+    if (!query) return
+    setLoading(true)
+    setError(null)
+    try {
+      const results = await searchStocks(query)
+      if (results && results.length > 0) {
+        const match = results[0]
+        set當前股票({
+          代號: match.ticker,
+          名稱: match.name,
+          英文: match.name,
+          價格: 0,
+          漲跌: 0,
+          開盤: 0,
+          最高: 0,
+          最低: 0,
+          成交量: '-',
+          市值: '-',
+          產業: match.sector || '科技',
+          本益比: 0,
+          股息率: 0,
+        })
+        setApiData(null)
+        set已收藏(false)
+        set搜尋關鍵字('')
+        // 清除 URL 參數避免重複觸發
+        if (typeof window !== 'undefined') {
+          window.history.replaceState({}, '', '/stock-analysis')
+        }
+      } else {
+        setError(`找不到股票「${query}」，請檢查代號是否正確`)
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '搜尋失敗')
+    } finally {
+      setLoading(false)
+    }
+  }, [搜尋關鍵字])
 
   return (
     <div className="space-y-6">
@@ -184,6 +445,20 @@ export function StockAnalysisContent() {
         </svg>
       </div>
 
+      {/* 載入/錯誤提示 */}
+      {loading && (
+        <div className="flex items-center gap-2 rounded-xl bg-primary/5 border border-primary/20 px-4 py-2 text-sm text-primary">
+          <Activity className="h-4 w-4 animate-spin" />
+          正在載入 {當前股票.代號} 分析數據...
+        </div>
+      )}
+      {error && (
+        <div className="flex items-center gap-2 rounded-xl bg-amber-500/5 border border-amber-500/20 px-4 py-2 text-sm text-amber-600 dark:text-amber-400">
+          <AlertTriangle className="h-4 w-4" />
+          API 連線失敗（{error}）
+        </div>
+      )}
+
       {/* 頂部搜尋與股票資訊區 */}
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         {/* 搜尋區域 */}
@@ -194,6 +469,12 @@ export function StockAnalysisContent() {
               placeholder="搜尋股票代號或名稱..."
               value={搜尋關鍵字}
               onChange={(e) => set搜尋關鍵字(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault()
+                  handleSearch()
+                }
+              }}
               className="w-72 bg-background/50 pl-10 backdrop-blur-sm"
             />
           </div>
@@ -210,6 +491,9 @@ export function StockAnalysisContent() {
               <SelectItem value="日K">日 K</SelectItem>
               <SelectItem value="週K">週 K</SelectItem>
               <SelectItem value="月K">月 K</SelectItem>
+              <SelectItem value="季K">季 K</SelectItem>
+              <SelectItem value="半年">半年</SelectItem>
+              <SelectItem value="年K">年 K</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -225,18 +509,12 @@ export function StockAnalysisContent() {
               onClick={() => handleStockChange(股票)}
               className={cn(
                 "h-8 gap-1.5 transition-all",
-                當前股票.代號 === 股票.代號 
-                  ? "shadow-md shadow-primary/20" 
+                當前股票.代號 === 股票.代號
+                  ? "shadow-md shadow-primary/20"
                   : "bg-background/50 hover:bg-background"
               )}
             >
               <span className="font-medium">{股票.代號}</span>
-              <span className={cn(
-                "text-xs",
-                股票.漲跌 >= 0 ? "text-emerald-500" : "text-rose-500"
-              )}>
-                {股票.漲跌 >= 0 ? '+' : ''}{股票.漲跌.toFixed(2)}%
-              </span>
             </Button>
           ))}
         </div>
@@ -320,7 +598,7 @@ export function StockAnalysisContent() {
                   <span className="animate-pulse rounded-full bg-emerald-500 px-1.5 py-0.5 text-[10px] text-white">
                     即時
                   </span>
-                  最後更新: {new Date().toLocaleTimeString('zh-TW')}
+                  最後更新: {lastUpdated}
                 </div>
               </div>
 
@@ -396,8 +674,7 @@ export function StockAnalysisContent() {
           <AdvancedCandlestickChart
             data={candlestickData}
             markers={chartMarkers}
-            vwap={188.92}
-            anchoredVwap={186.50}
+            vwap={vwapValue}
             support={supportLevels}
             resistance={resistanceLevels}
             breakoutAnnotations={breakoutAnnotations}
@@ -407,8 +684,8 @@ export function StockAnalysisContent() {
         {/* 進階量價分布圖 */}
         <div>
           <AdvancedVolumeProfile
-            data={volumeProfileData}
-            chipData={chipDistribution}
+            data={apiData?.volumeProfile || []}
+            chipData={apiData?.chipDistribution || { poc: 0, vah: 0, val: 0, hvn: [], lvn: [], chipPressure: 0, upperTrappedChips: 0, lowerSupportDensity: 0 }}
             currentPrice={當前股票.價格}
             ticker={當前股票.代號}
           />
@@ -450,15 +727,15 @@ export function StockAnalysisContent() {
         </TabsList>
 
         <TabsContent value="技術指標" className="space-y-4">
-          <IndicatorCards 股票代號={當前股票.代號} />
+          <IndicatorCards 股票代號={當前股票.代號} indicators={apiData?.indicators || undefined} />
         </TabsContent>
 
         <TabsContent value="突破分析" className="space-y-4">
-          <BreakoutPanel 股票代號={當前股票.代號} />
+          <BreakoutPanel data={apiData?.breakoutAnalysis || { breakoutLevel: 0, trueBreakoutScore: 0, falseBreakoutRisk: 0, volumeRatio: 0, closeStrength: 0, obvConfirmation: false, rsiDivergence: false, upperChipPressure: 0 }} />
         </TabsContent>
 
         <TabsContent value="買賣訊號" className="space-y-4">
-          <SignalPanel 股票代號={當前股票.代號} />
+          <SignalPanel data={apiData?.signalData || { buyScore: 0, sellScore: 0, entryZone: { low: 0, high: 0 }, stopLoss: 0, targets: [], riskRewardRatio: 0 }} currentPrice={當前股票.價格} />
         </TabsContent>
 
         <TabsContent value="AI解讀" className="space-y-6">
@@ -574,26 +851,28 @@ export function StockAnalysisContent() {
                 </p>
                 
                 {/* 關鍵價位 */}
-                <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                  <div className="rounded-xl bg-emerald-500/10 p-4 ring-1 ring-emerald-500/20">
-                    <div className="text-xs text-muted-foreground">進場區間</div>
-                    <div className="mt-1 text-xl font-bold text-emerald-500">
-                      ${supportLevels[0].toFixed(2)} - ${(supportLevels[0] + 2).toFixed(2)}
+                {supportLevels.length >= 2 && resistanceLevels.length >= 2 && (
+                  <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                    <div className="rounded-xl bg-emerald-500/10 p-4 ring-1 ring-emerald-500/20">
+                      <div className="text-xs text-muted-foreground">進場區間</div>
+                      <div className="mt-1 text-xl font-bold text-emerald-500">
+                        ${supportLevels[0].toFixed(2)} - ${(supportLevels[0] + 2).toFixed(2)}
+                      </div>
+                    </div>
+                    <div className="rounded-xl bg-rose-500/10 p-4 ring-1 ring-rose-500/20">
+                      <div className="text-xs text-muted-foreground">停損價位</div>
+                      <div className="mt-1 text-xl font-bold text-rose-500">
+                        ${(supportLevels[1] - 2).toFixed(2)}
+                      </div>
+                    </div>
+                    <div className="rounded-xl bg-primary/10 p-4 ring-1 ring-primary/20">
+                      <div className="text-xs text-muted-foreground">目標價位</div>
+                      <div className="mt-1 text-xl font-bold text-primary">
+                        ${resistanceLevels[1].toFixed(2)} - ${resistanceLevels[2]?.toFixed(2) || (resistanceLevels[1] + 5).toFixed(2)}
+                      </div>
                     </div>
                   </div>
-                  <div className="rounded-xl bg-rose-500/10 p-4 ring-1 ring-rose-500/20">
-                    <div className="text-xs text-muted-foreground">停損價位</div>
-                    <div className="mt-1 text-xl font-bold text-rose-500">
-                      ${(supportLevels[1] - 2).toFixed(2)}
-                    </div>
-                  </div>
-                  <div className="rounded-xl bg-primary/10 p-4 ring-1 ring-primary/20">
-                    <div className="text-xs text-muted-foreground">目標價位</div>
-                    <div className="mt-1 text-xl font-bold text-primary">
-                      ${resistanceLevels[1].toFixed(2)} - $200.00
-                    </div>
-                  </div>
-                </div>
+                )}
               </CardContent>
             </Card>
 

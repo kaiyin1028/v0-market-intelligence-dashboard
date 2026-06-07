@@ -168,13 +168,18 @@ export interface TradeSignal {
 }
 
 /** 訊號類型 */
-export type SignalType = 
+export type SignalType =
   | 'strong-buy'   // 強力買入
   | 'buy'          // 買入
   | 'watch'        // 觀察
   | 'reduce'       // 減碼
   | 'sell'         // 賣出
   | 'short'        // 做空
+  | 'hold'         // 持有
+  | 'breakout'     // 突破
+  | 'false_breakout' // 假突破
+  | 'accumulation' // 吸籌
+  | 'distribution' // 派發
 
 /** 時間週期 */
 export type Timeframe = '1D' | '1W' | '1M' | '3M' | '6M' | '1Y' | '5Y'

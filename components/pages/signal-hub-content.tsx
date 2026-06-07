@@ -5,7 +5,7 @@
  * 顯示各類交易訊號的統一管理介面
  */
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -37,6 +37,8 @@ import {
 } from "lucide-react"
 import { SignalBadge } from "@/components/dashboard/signal-badge"
 import { ScoreGauge } from "@/components/dashboard/score-gauge"
+import { getSignals } from "@/lib/api"
+import type { TradeSignal } from "@/types"
 
 /** 訊號類別 */
 type 訊號類別 = "買入" | "賣出" | "觀望" | "加碼" | "減碼"
@@ -62,93 +64,93 @@ interface 交易訊號 {
 const 模擬交易訊號: 交易訊號[] = [
   {
     id: "1",
-    股票代號: "2330",
-    股票名稱: "台積電",
+    股票代號: "AAPL",
+    股票名稱: "Apple",
     訊號類別: "買入",
     強度: 88,
-    來源: ["MACD金叉", "KD黃金交叉", "外資買超"],
-    觸發價: 890,
-    目標價: 950,
-    停損價: 865,
-    風險報酬比: 2.4,
+    來源: ["MACD金叉", "均線多頭", "量價配合"],
+    觸發價: 230,
+    目標價: 250,
+    停損價: 220,
+    風險報酬比: 2.0,
     時間: "09:15",
     有效期: "5日",
-    理由: "技術面多頭排列，籌碼面外資連續買超，量能配合良好",
+    理由: "技術面多頭排列，服務業收入穩健增長，量能配合良好",
   },
   {
     id: "2",
-    股票代號: "2454",
-    股票名稱: "聯發科",
-    訊號類別: "觀望",
-    強度: 55,
-    來源: ["型態整理中"],
-    觸發價: 1280,
-    目標價: 1350,
-    停損價: 1240,
-    風險報酬比: 1.75,
+    股票代號: "NVDA",
+    股票名稱: "NVIDIA",
+    訊號類別: "買入",
+    強度: 92,
+    來源: ["突破新高", "成交量放大", "AI需求強勁"],
+    觸發價: 135,
+    目標價: 155,
+    停損價: 125,
+    風險報酬比: 2.0,
     時間: "10:32",
-    有效期: "3日",
-    理由: "價格處於箱型整理，等待方向突破再進場",
+    有效期: "7日",
+    理由: "AI晶片需求持續強勁，突破歷史新高，數據中心業務動能強勁",
   },
   {
     id: "3",
-    股票代號: "2317",
-    股票名稱: "鴻海",
-    訊號類別: "買入",
-    強度: 78,
-    來源: ["突破壓力位", "成交量放大"],
-    觸發價: 175,
-    目標價: 195,
-    停損價: 168,
-    風險報酬比: 2.86,
+    股票代號: "0700.HK",
+    股票名稱: "騰訊控股",
+    訊號類別: "觀望",
+    強度: 65,
+    來源: ["型態整理中"],
+    觸發價: 380,
+    目標價: 420,
+    停損價: 360,
+    風險報酬比: 2.0,
     時間: "11:05",
-    有效期: "7日",
-    理由: "突破前高壓力位，成交量明顯放大，短線看漲",
+    有效期: "5日",
+    理由: "遊戲版號回暖但廣告收入承壓，等待方向突破再進場",
   },
   {
     id: "4",
-    股票代號: "3008",
-    股票名稱: "大立光",
-    訊號類別: "賣出",
-    強度: 72,
-    來源: ["跌破支撐", "RSI超賣"],
-    觸發價: 2180,
-    目標價: 2050,
-    停損價: 2220,
-    風險報酬比: 3.25,
+    股票代號: "TSLA",
+    股票名稱: "Tesla",
+    訊號類別: "觀望",
+    強度: 58,
+    來源: ["均線糾結", "競爭加劇"],
+    觸發價: 245,
+    目標價: 280,
+    停損價: 225,
+    風險報酬比: 1.75,
     時間: "14:05",
-    有效期: "5日",
-    理由: "跌破重要支撐位，短線偏空操作",
+    有效期: "3日",
+    理由: "Robotaxi題材發酵但交付數據波動，短線區間操作",
   },
   {
     id: "5",
-    股票代號: "2881",
-    股票名稱: "富邦金",
-    訊號類別: "加碼",
+    股票代號: "MSFT",
+    股票名稱: "Microsoft",
+    訊號類別: "買入",
     強度: 85,
-    來源: ["外資大買", "突破頸線"],
-    觸發價: 78,
-    目標價: 88,
-    停損價: 74,
-    風險報酬比: 2.5,
+    來源: ["雲端動能", "突破頸線", "AI產品週期"],
+    觸發價: 435,
+    目標價: 470,
+    停損價: 415,
+    風險報酬比: 1.75,
     時間: "09:32",
     有效期: "10日",
-    理由: "外資大量買進，突破頭肩底頸線，中期看多",
+    理由: "Azure與Copilot動能強勁，突破整理區間上緣，中期看多",
   },
   {
     id: "6",
-    股票代號: "2303",
-    股票名稱: "聯電",
+    股票代號: "3690.HK",
+    股票名稱: "美團",
     訊號類別: "買入",
-    強度: 82,
-    來源: ["三角收斂突破", "均線多頭"],
-    觸發價: 52,
-    目標價: 58,
-    停損價: 49,
+    強度: 78,
+    來源: ["三角收斂突破", "均線多頭", "本地生活復甦"],
+    觸發價: 125,
+    目標價: 145,
+    停損價: 115,
     風險報酬比: 2.0,
     時間: "09:48",
     有效期: "7日",
-    理由: "突破三角收斂上緣，均線呈多頭排列",
+    理由: "突破三角收斂上緣，本地生活業務復甦，均線呈多頭排列",
   },
 ]
 
@@ -160,6 +162,35 @@ const 訊號統計 = {
   加碼: 5,
   減碼: 3,
   總數: 43,
+}
+
+/** 將後端交易訊號映射為本地格式 */
+function mapTradeSignals(signals: TradeSignal[]): 交易訊號[] {
+  const typeMap: Record<string, 訊號類別> = {
+    "strong-buy": "加碼",
+    buy: "買入",
+    watch: "觀望",
+    reduce: "減碼",
+    sell: "賣出",
+    short: "賣出",
+  }
+  return signals.map((s) => ({
+    id: s.id,
+    股票代號: s.ticker,
+    股票名稱: s.name,
+    訊號類別: typeMap[s.signalType] || "觀望",
+    強度: Math.round(s.score),
+    來源: s.aiExplanation ? [s.aiExplanation.slice(0, 20)] : ["技術分析"],
+    觸發價: s.entryPrice,
+    目標價: s.target,
+    停損價: s.stopLoss,
+    風險報酬比: s.riskRewardRatio,
+    時間: s.createdAt
+      ? new Date(s.createdAt).toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit" })
+      : "09:00",
+    有效期: "5日",
+    理由: s.reason,
+  }))
 }
 
 /** 取得訊號類別顏色 */
@@ -198,8 +229,35 @@ export function SignalHubContent() {
   // 篩選條件
   const [篩選類別, set篩選類別] = useState<string>("全部")
 
+  // API 數據狀態
+  const [交易訊號列表, set交易訊號列表] = useState<交易訊號[]>(模擬交易訊號)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  // 從 API 載入數據
+  useEffect(() => {
+    let cancelled = false
+    setLoading(true)
+    setError(null)
+    getSignals()
+      .then((res) => {
+        if (!cancelled && res.length > 0) {
+          set交易訊號列表(mapTradeSignals(res))
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : "載入失敗")
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+    return () => { cancelled = true }
+  }, [])
+
   // 篩選後的訊號
-  const 篩選後訊號 = 模擬交易訊號.filter((訊號) => {
+  const 篩選後訊號 = 交易訊號列表.filter((訊號) => {
     if (篩選類別 === "全部") return true
     return 訊號.訊號類別 === 篩選類別
   })
@@ -254,6 +312,20 @@ export function SignalHubContent() {
           </Card>
         ))}
       </div>
+
+      {/* 載入/錯誤提示 */}
+      {loading && (
+        <div className="flex items-center gap-2 rounded-xl bg-primary/5 border border-primary/20 px-4 py-2 text-sm text-primary">
+          <Activity className="h-4 w-4 animate-spin" />
+          正在載入交易訊號...
+        </div>
+      )}
+      {error && (
+        <div className="flex items-center gap-2 rounded-xl bg-amber-500/5 border border-amber-500/20 px-4 py-2 text-sm text-amber-600 dark:text-amber-400">
+          <AlertCircle className="h-4 w-4" />
+          API 連線失敗，已切換至模擬數據（{error}）
+        </div>
+      )}
 
       {/* 主要內容區 */}
       <div className="grid gap-6 lg:grid-cols-3">
